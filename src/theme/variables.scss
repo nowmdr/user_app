@@ -1,0 +1,35 @@
+// colors
+$main-gray:rgb(211, 211, 211);
+//styles
+.app-form{
+    display: flex;
+    flex-direction: column;
+
+    width: 50%;
+    padding: 20px;
+    margin: 0 auto;
+
+    border: 1px solid $main-gray;
+    border-radius: 10px;
+}
+.app-input{
+    border: 1px solid $main-gray;
+    border-radius: 5px;
+    padding: 5px 10px;
+    transition: 2s ease;
+}
+.app-button{
+    border: 1px solid $main-gray;
+    border-radius: 5px;
+
+    width: 80px;
+    padding: 10px 15px;
+
+    background-color: rgb(138, 203, 246);
+
+    cursor: pointer;
+}
+//attention
+.invalid{
+    border: 1.5px solid rgb(255, 62, 62);
+}
