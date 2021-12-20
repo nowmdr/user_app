@@ -3,6 +3,7 @@ import Vuelidate from 'vuelidate'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import dataFilter from './filters/date.filter'
 
 // firebase
 import firebase from 'firebase/compat/app'
@@ -23,7 +24,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 
 Vue.use(Vuelidate)
-
+Vue.filter('date',  dataFilter) 
 
 
 new Vue({
