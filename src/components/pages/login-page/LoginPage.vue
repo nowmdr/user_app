@@ -1,8 +1,8 @@
 <template>
     <div class="login">
         <h3 class="title">Authorization</h3>
-        <form class="form app-form" @submit.prevent="submitHandler()">
-          <div class="form__input">
+        <form class="login-form app-form" @submit.prevent="submitHandler()">
+          <div class="app-form__input">
             <input 
             class="app-input" 
             type="text" 
@@ -12,12 +12,12 @@
             >
             <span
             v-if="$v.email.$dirty && !$v.email.required"
-            >Email is empty</span>
+            >email is empty</span>
             <span
             v-else-if="$v.email.$dirty && !$v.email.email"
-            >Your Email is incorrect</span>
+            >your email is incorrect</span>
           </div>
-          <div class="form__input">
+          <div class="app-form__input">
             <input 
             class="app-input" 
             type="password" 
@@ -27,25 +27,24 @@
             >
             <span
             v-if="$v.password.$dirty && !$v.password.required"
-            >Password is empty</span>
+            >password is empty</span>
             <span
             v-if="$v.password.$dirty && !$v.password.minLength"
-            >Password dont be less than 6 symbols, now is {{password.length}}</span>
+            >password dont be less than 6 symbols, now is {{password.length}}</span>
           </div>
           <button class="app-button" type="submit">Submit</button>
-          <router-link style="margin-top:15px" to="/register">Register</router-link>
-          <span>{{errorMessage}}</span>
+          <router-link class="app-link login-form__link" to="/register">Register</router-link>
         </form>
     </div>
 </template>
 <script>
 import {email, required, minLength} from 'vuelidate/lib/validators'
 import './LoginPage.scss'
+import messages from '../../../utils/messages'
 export default {
   components: {  },
   name: 'login-page',
   data: () => ({
-    errorMessage:'',
     email: '',
     password: ''
   }),
@@ -56,9 +55,8 @@ export default {
   },
   watch:{
     error(fbError){
-      console.log(fbError)
-      // this.errorMessage = this.$error(fbError.message || 'Wrong')
-      this.errorMessage = fbError.message || 'Something went wrong'
+      console.log(fbError.code)
+      this.$error(messages[fbError.code] || 'Something wrong, try again') 
     }
   }, 
   validations:{
@@ -79,10 +77,12 @@ export default {
         await this.$store.dispatch('login', formData)
         console.log(formData);
         this.$router.push('/home')
-      } catch (e) {
-        
-      }
-      
+      } catch (e) {}
+    }
+  },
+  mounted(){
+    if (messages[this.$route.query.message]) {
+        this.$message(messages[this.$route.query.message])
     }
   }
 }

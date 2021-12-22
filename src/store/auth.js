@@ -13,13 +13,14 @@ export default{
              await firebase.auth().signOut()
              await commit('clearInfo')
          },
-         async register({dispatch, commit},{email, password, name, dateOfBirth}){
+         async register({dispatch, commit},{email, password, name, dateOfBirth,city}){
              try {
                  await firebase.auth().createUserWithEmailAndPassword(email, password)
                  const uid = await dispatch('getUid')
                  await firebase.database().ref(`/users/${uid}/info`).set({
                     dateOfBirth,
-                    name
+                    name,
+                    city
                  })
              } catch (e) {
                 commit('setError', e)

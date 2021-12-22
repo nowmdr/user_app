@@ -1,0 +1,12 @@
+@import '../../../theme/variables.scss';
+.user-data{
+    display: flex;
+    justify-content: center;
+    &__item{
+        color: $main-blue;
+        font-weight: 700;
+        &:not(:last-child){
+            margin-bottom: 10px;
+        }
+    }
+}

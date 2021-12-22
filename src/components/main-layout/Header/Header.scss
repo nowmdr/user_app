@@ -1,5 +1,8 @@
+@import '../../../theme/variables.scss';
 .header{
-    background-color: rgb(211, 211, 211);
+    // background-color: $main-light;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    
     min-height: 50px;
     padding: 10px 0;
     display: flex;
@@ -12,9 +15,13 @@
     }
 }
 .menu{
+    display: flex;
+    justify-content: space-between;
     &__list{
         display: flex;
-        justify-content: space-between;
         align-items: center;
+    }
+    &__item{
+        margin-right: 10%;
     }
 }

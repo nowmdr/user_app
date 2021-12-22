@@ -6,9 +6,8 @@
                 <li class="menu__item"><router-link to="/home">Home</router-link></li>
                 <li class="menu__item"><router-link to="/weather">Weather</router-link></li>
                 <li class="menu__item"><router-link to="/exchange">Exchange</router-link></li>
-                <li class="menu__item"><router-link to="/login">Login</router-link></li>
-                <li class="menu__item"><button class="app-button" @click.prevent="logout()">Logout</button></li>
             </ul>
+            <a class="app-link" @click.prevent="logout()">Logout</a>
         </nav>
     </div>
 </div>  
@@ -16,13 +15,20 @@
 <script>
 import { defineComponent } from '@vue/composition-api'
 import './Header.scss'
+import firebase from 'firebase/compat/app'
 
 export default {
    methods:{
        async logout(){
            await this.$store.dispatch('logout');
-           this.$router.push('/login');
+           this.$router.push('/login?message=logout');
        }
-   }
+   },
+    // mounted(){
+    //     const currentUser = firebase.auth().currentUser
+    //    if (currentUser) {
+    //        return currentUser
+    //    }
+    // },
 }
 </script>

@@ -1,5 +1,6 @@
-.title{
-    width: 200px;
-    text-align: center;
-    margin: 20px auto;
- }
+@import '../../../theme/variables.scss';
+.register-form{
+    &__link{
+        margin-top: 15px;
+    }
+}

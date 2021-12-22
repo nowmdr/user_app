@@ -4,6 +4,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import dataFilter from './filters/date.filter'
+import "materialize-css/dist/js/materialize.min.js";
+import messagePlugin from './utils/message.plugin'
+
 
 // firebase
 import firebase from 'firebase/compat/app'
@@ -23,12 +26,20 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig)
 
+Vue.use(messagePlugin)
 Vue.use(Vuelidate)
 Vue.filter('date',  dataFilter) 
 
+let app
+firebase.auth().onAuthStateChanged(() => {
+  if (!app) {
+      app = new Vue({
+        router,
+        store,
+        render: h => h(App) 
+      }).$mount('#app')
+  }
+  
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+})
+
