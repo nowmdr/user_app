@@ -18,12 +18,23 @@ import './Header.scss'
 import firebase from 'firebase/compat/app'
 
 export default {
-   methods:{
-       async logout(){
+    data:() => ({
+        active: false
+    }),
+    methods:{
+        async logout(){
            await this.$store.dispatch('logout');
            this.$router.push('/login?message=logout');
+       },
+       addActive(){
+           this.active = !this.active
+           console.log(this.$route)
+           console.log(this.active)
        }
    },
+   mounted(){
+
+   }
     // mounted(){
     //     const currentUser = firebase.auth().currentUser
     //    if (currentUser) {

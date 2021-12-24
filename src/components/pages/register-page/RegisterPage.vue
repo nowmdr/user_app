@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="register">
         <h3 class="title">Registration</h3>
         <form class="app-form register-form" @submit.prevent="submitHandler()">
         <div class="app-form__input">
@@ -46,7 +46,7 @@
         </div>
         <div class="app-form__input">
             <input 
-            type="text"
+            type="date"
             class="app-input"
             placeholder="Date of birth..."
             v-model="dateOfBirth"

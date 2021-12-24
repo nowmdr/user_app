@@ -1,7 +1,7 @@
 @import '../../../theme/variables.scss';
 .header{
     // background-color: $main-light;
-    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    box-shadow: $shadow-black;
     
     min-height: 50px;
     padding: 10px 0;
@@ -23,5 +23,8 @@
     }
     &__item{
         margin-right: 10%;
+        &:hover{
+            border-bottom: 0.5px solid $main-light-blue;
+        }
     }
 }

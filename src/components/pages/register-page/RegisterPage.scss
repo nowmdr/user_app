@@ -1,6 +1,12 @@
 @import '../../../theme/variables.scss';
-.register-form{
-    &__link{
-        margin-top: 15px;
+.register{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    &-form{
+        &__link{
+            margin-top: 15px;
+        }
     }
 }

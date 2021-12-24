@@ -12,19 +12,42 @@ $shadow-black:0 7px 25px rgba(0, 0, 0, 0.08);
 $shadow-blue-attention: 0 0 15px rgba(40, 122, 255, 0.2);
 $shadow-red-attention: 0 0px 15px rgba(255, 62, 62, 0.2);
 
+//mixins
+@mixin breakpoint($point){
+    @if $point == lg{
+        @media (max-width:992px){@content;}
+    } @else if $point == md {
+        @media (max-width:768px){@content;}
+    } @else if $point == sm {
+        @media (max-width:576px){@content;}
+    } @else if $point == xs {
+        @media (max-width:320px){@content;}
+    }
+}
 
 //styles
 .app-form{
     display: flex;
     flex-direction: column;
 
-    min-width: 30%;
+    width: 30%;
     padding: 20px;
-    margin: 0 auto;
 
     border: none;
     border-radius: 20px;
     box-shadow: $shadow-black;
+    @include breakpoint(lg){
+        width: 40%;
+    }
+    @include breakpoint(md){
+        width: 50%;
+    }
+    @include breakpoint(sm){
+        width: 80%;
+    }
+    @include breakpoint(xs){
+        width: 90%;
+    }
     &__input{
         display: flex;
         flex-direction: column;
@@ -62,6 +85,7 @@ $shadow-red-attention: 0 0px 15px rgba(255, 62, 62, 0.2);
     background-color: $main-light-blue;
     color: $main-light;
     font-weight: 700;
+    font-size: 16px;
     cursor: pointer;
     &:hover{
         background-color: $main-blue;
@@ -99,13 +123,28 @@ $shadow-red-attention: 0 0px 15px rgba(255, 62, 62, 0.2);
 }
 
 .title{
-    min-width: 200px;
-    text-align: center;
+    width: 30%;
     margin: 20px auto;
+    text-align: center;
+    @include breakpoint(lg){
+        width: 40%;
+    }
+    @include breakpoint(md){
+        width: 50%;
+    }
+    @include breakpoint(sm){
+        width: 80%;
+    }
+    @include breakpoint(xs){
+        // width: 90%;
+    }
  }
 
 
 //attention
 .invalid{
     box-shadow: $shadow-red-attention;
+}
+.active{
+    border-bottom: 0.5px solid $main-light-blue;
 }

@@ -2,24 +2,17 @@
     <div>
         <loader-page v-if="loader"></loader-page>
         <div v-else class="home">
-            <h3 class="title">Hello {{copyInfo.name}} it is your profile info</h3>
-            <div class="user-data">
-                <app-card class="user-data__card">
-                    <ul class="user-data__list">
-                        <li class="user-data__item"><span>Your name is: </span>{{copyInfo.name}} </li>
-                        <li class="user-data__item"><span>Date of birth:</span> {{copyInfo.dateOfBirth | date('date') }}</li>
-                        <li class="user-data__item"><span>Current city is:</span> </li>
-                    </ul>
-                </app-card>
-                <form class="app-form home-form">
-                    <label class="home-form__input">Name:
+            <h3 class="title">Hello {{copyInfo.name}}<br>it is your profile info</h3>
+            <div class="user">
+                <form class="app-form user-form">
+                    <label class="user-form__input">Name:
                         <input 
                         type="text"
                         v-model="copyInfo.name"
                         placeholder="Enter you name..."
                         :disabled="inputDisabled">
                     </label>
-                    <div>
+                    <label class="user-form__input">
                         Date of birth:
                         <span v-if="inputDisabled">{{copyInfo.dateOfBirth | date('date') }}</span>
                         <input 
@@ -28,14 +21,16 @@
                         :disabled="inputDisabled"
                         v-model="copyInfo.dateOfBirth"
                         >
-                    </div>
-                    <div>City<input 
-                    type="text"
-                    :disabled="inputDisabled"
-                    v-model="copyInfo.city"
-                    ></div>
-                    <button v-if="inputDisabled" @click.prevent="inputDisabled=false">Edit</button>
-                    <button v-else @click.prevent="uploadData()">Save</button>
+                    </label>
+                    <label class="user-form__input">City: 
+                        <input 
+                            type="text"
+                            :disabled="inputDisabled"
+                            placeholder="Enter your city..."
+                            v-model="copyInfo.city">
+                    </label>
+                    <a class="app-link user-form__link" v-if="inputDisabled" @click.prevent="inputDisabled=false">Edit</a>
+                    <button class="app-button user-form__button" v-else @click.prevent="uploadData()">Save</button>
                 </form>
             </div>
         </div>   
