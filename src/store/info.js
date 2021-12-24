@@ -20,6 +20,20 @@ export default{
             } catch (e) {
                 console.log(e)
             }  
+        },
+        async updateInfo({dispatch, commit},{name, dateOfBirth,city}){
+            try {
+                const uid = await dispatch('getUid')
+                await firebase.database().ref(`/users/${uid}/info`).set({
+                    dateOfBirth,
+                    name,
+                    city
+                 })
+                // const info = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val()
+                // commit('setInfo', info)
+            } catch (e) {
+                console.log(e)
+            }  
         }
     },
     getters:{

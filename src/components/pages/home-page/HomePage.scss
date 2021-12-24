@@ -10,3 +10,18 @@
         }
     }
 }
+.home-form{
+    &__input{
+        & input{
+            border: none;
+            font-size: inherit;
+            &:focus{
+                // box-shadow:$shadow-blue-attention;
+                outline: none;
+            }
+            &:disabled{
+                background-color: $main-white;
+            }
+        }
+    }
+}
