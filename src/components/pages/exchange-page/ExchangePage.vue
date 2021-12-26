@@ -2,7 +2,7 @@
     <div>
         <loader-page v-if="loader"></loader-page>
         <div v-else class="exchange">
-        <h3 class="title">Exchange on<br> {{currency.date | date('date')}}</h3>
+        <h3 class="title">Exchange on<br> {{currency.date | date('date') }}</h3>
             <div class="exchange__container">
                 <app-card class="exchange__card">EUR 
                     <input
