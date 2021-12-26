@@ -1,7 +1,8 @@
 @import '../../../theme/variables.scss';
 .footer{
-    display: none;
-    margin-top: 20%;
+    display: flex;
+    justify-content: center;
+    font-size: 12px;
     height: 40px;
-    box-shadow: $shadow-black;
+    // box-shadow: $shadow-black;
 }

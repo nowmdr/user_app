@@ -18,13 +18,21 @@
     display: flex;
     justify-content: space-between;
     &__list{
+        @include breakpoint(sm){
+            display: none;
+        }
         display: flex;
         align-items: center;
     }
     &__item{
         margin-right: 10%;
-        &:hover{
-            border-bottom: 0.5px solid $main-light-blue;
-        }
+        // &:hover{
+        //     // border-bottom: 0.5px solid $main-light-blue;
+        // }
     }
+}
+.logout-link{
+    @include breakpoint(sm){
+        display: none;
+    }  
 }

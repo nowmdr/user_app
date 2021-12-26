@@ -3,12 +3,15 @@ import Vuex from 'vuex'
 import auth from './auth'
 import info from './info'
 import axios from 'axios'
+import burger from './burger'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     error: null
+    // isNavOpen: false
+
   },
   mutations: {
     setError(state, error){
@@ -16,7 +19,10 @@ export default new Vuex.Store({
     },
     clearError(state){
       state.error = null
-    }
+    },
+  //   toggleNav() {
+  //     state.isNavOpen = !state.isNavOpen
+  // }
   },
   getters:{
     error: s => s.error
@@ -29,6 +35,6 @@ export default new Vuex.Store({
     }
   },
   modules: { 
-    auth, info
+    auth, info, burger
   }
 })

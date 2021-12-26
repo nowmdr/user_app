@@ -27,6 +27,12 @@
                 &:disabled{
                     background-color: $main-white;
                 }
+
+            }
+            &__error{
+                margin-top: 10px;
+                font-size: 12px;
+                color:$main-light-red;
             }
         }
         &__link{

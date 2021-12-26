@@ -39,6 +39,7 @@
 <script>
 import AppCard from '../../UI/app-card/AppCard.vue'
 import LoaderPage from '../loader-page/LoaderPage.vue'
+import {required, minLength} from 'vuelidate/lib/validators'
 import './HomePage.scss'
 export default {
   components: { AppCard, LoaderPage },
@@ -53,21 +54,16 @@ export default {
         this.loader = false
     }, 
     computed:{
-        // name(){
-        //     return this.$store.getters.info.name
-        // },
-        // dateOfBirth(){
-        //     return this.$store.getters.info.dateOfBirth
-        // }, 
-        // city(){
-        //     return this.$store.getters.info.city
-        // },
         getInfo(){
             return this.$store.getters.info
         }
     },
     methods:{
         async uploadData(){
+            // if(this.$v.$invalid){
+            //     this.$v.$touch()
+            //     return
+            // }
             console.log(this.copyInfo)
             this.inputDisabled = true
             await this.$store.dispatch('updateInfo', this.copyInfo)
@@ -77,9 +73,12 @@ export default {
     },
     data: () => ({
         loader: true,
-        some: 'kek',
         inputDisabled: true,
         copyInfo: null
-    })
+    }),
+    validations:{
+        name:{required},
+        city:{required}
+    }
 }
 </script>

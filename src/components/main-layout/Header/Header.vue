@@ -1,36 +1,57 @@
 <template>
-<div class="header">
-    <div class="header__container">
-        <nav class="header__menu menu">
-            <ul class="menu__list">
-                <li class="menu__item"><router-link to="/home">Home</router-link></li>
-                <li class="menu__item"><router-link to="/weather">Weather</router-link></li>
-                <li class="menu__item"><router-link to="/exchange">Exchange</router-link></li>
-            </ul>
-            <a class="app-link" @click.prevent="logout()">Logout</a>
-        </nav>
-    </div>
-</div>  
+    <div class="header">
+        <div class="header__container">
+            <nav class="header__menu menu">
+                <BurgerButton/>
+                <Sidebar/>
+                <ul class="menu__list">
+                    <li v-for="link in links" :key="link.name"
+                    class="menu__item">
+                        <router-link
+                        :to="link.route"
+                        active-class="active"
+                        >{{link.name}}</router-link>
+                    </li>
+                </ul>
+                <a class="app-link logout-link" @click.prevent="logout()">Logout</a>
+            </nav>
+        </div>
+    </div>  
 </template>
 <script>
 import { defineComponent } from '@vue/composition-api'
 import './Header.scss'
 import firebase from 'firebase/compat/app'
+import BurgerButton from '../../UI/burger-button/BurgerButton.vue'
+import Sidebar from '../../UI/sidebar/Sidebar.vue'
+
 
 export default {
+  components: { BurgerButton, Sidebar },
     data:() => ({
-        active: false
+        links: [
+            {
+                name: 'Home',
+                route: '/home',
+            },
+            {
+                name: 'Weather',
+                route: '/weather',
+            },
+            {
+                name: 'Exchange',
+                route: '/exchange',
+            },
+        ],
     }),
     methods:{
         async logout(){
            await this.$store.dispatch('logout');
            this.$router.push('/login?message=logout');
-       },
-       addActive(){
-           this.active = !this.active
-           console.log(this.$route)
-           console.log(this.active)
-       }
+        },
+        closeSidebarPanel() {
+                this.$store.commit('closeSidebar')
+            },
    },
    mounted(){
 

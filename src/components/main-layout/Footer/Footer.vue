@@ -1,11 +1,17 @@
 <template>
     <footer class="footer">
-        <!-- <img src="src/assets/copyright.svg" alt="copyright"> -->
+        <div>
+            © Copyright {{ date }}
+        </div>
     </footer>
 </template>
 <script>
 import './Footer.scss'
 export default {
-    
+    data() {
+        return {
+        date: new Date().getFullYear(),
+        }
+    },
 }
 </script>
