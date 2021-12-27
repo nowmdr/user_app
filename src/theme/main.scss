@@ -31,6 +31,13 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+.gender-select{
+  -webkit-appearance: none;
+  color: $main-gray;
+}
+.main-black{
+  color: $main-black;
+}
 // input[type="date"]:in-range::-webkit-datetime-edit-year-field, 
 // input[type="date"]:in-range::-webkit-datetime-edit-month-field, 
 // input[type="date"]:in-range::-webkit-datetime-edit-day-field, 

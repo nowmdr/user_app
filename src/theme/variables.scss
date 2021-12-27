@@ -43,10 +43,10 @@ $shadow-red-attention: 0 0px 15px rgba(255, 62, 62, 0.2);
         width: 50%;
     }
     @include breakpoint(sm){
-        width: 80%;
+        width: 90%;
     }
     @include breakpoint(xs){
-        width: 90%;
+        width: 95%;
     }
     &__input{
         display: flex;
@@ -73,7 +73,6 @@ $shadow-red-attention: 0 0px 15px rgba(255, 62, 62, 0.2);
         box-shadow: $shadow-blue-attention;
         outline: none;
     }
-
 }
 .app-button{
     border: none;

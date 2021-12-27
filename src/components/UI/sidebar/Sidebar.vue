@@ -1,9 +1,9 @@
 <template>
     <div class="sidebar">
-        <div class="sidebar-backdrop" @click.prevent="closeSidebarPanel" v-if="this.isPanelOpen"></div>
+        <div class="sidebar__backdrop" @click.prevent="closeSidebarPanel" v-if="this.isPanelOpen"></div>
         <transition name="slide">
             <div v-if="this.isPanelOpen"
-                 class="sidebar-panel">
+                 class="sidebar__panel">
                 <ul class="sidebar-menu">
                     <li v-for="link in links" :key="link.name"
                     @click="closeSidebarPanel" 
@@ -20,41 +20,40 @@
     </div>
 </template>
 <script>
-    import "./Sidebar.scss"
-    export default {
-        data: () => ({
-            links: [
-            {
-                name: 'Home',
-                route: '/home',
-            },
-            {
-                name: 'Weather',
-                route: '/weather',
-            },
-            {
-                name: 'Exchange',
-                route: '/exchange',
-            },
-        ],
-        }),
-        methods: {
-            async logout(){
-                this.$store.commit('closeSidebar')
-                await this.$store.dispatch('logout');
-                this.$router.push('/login?message=logout');
-            },
-            closeSidebarPanel() {
-                console.log(this.isPanelOpen)
-                this.$store.commit('closeSidebar')
-                console.log(this.isPanelOpen)
-            }
+import "./Sidebar.scss"
+export default {
+    data: () => ({
+        links: [
+        {
+            name: 'Home',
+            route: '/home',
         },
-        computed: {
-            isPanelOpen() {
-                // return burger.isNavOpen
-                return this.$store.getters.isNavOpen
-            }
+        {
+            name: 'Weather',
+            route: '/weather',
+        },
+        {
+            name: 'Exchange',
+            route: '/exchange',
+        },
+    ],
+    }),
+    methods: {
+        async logout(){
+            this.$store.commit('closeSidebar')
+            await this.$store.dispatch('logout');
+            this.$router.push('/login?message=logout');
+        },
+        closeSidebarPanel() {
+            console.log(this.isPanelOpen)
+            this.$store.commit('closeSidebar')
+            console.log(this.isPanelOpen)
+        }
+    },
+    computed: {
+        isPanelOpen() {
+            return this.$store.getters.isNavOpen
         }
     }
+}
 </script>

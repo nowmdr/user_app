@@ -60,6 +60,20 @@
             >Date of birth dont be less than 6 symbols, format is - 01.01.1996</span>
         </div>
         <div class="app-form__input">
+            <select 
+            :class="{invalid: ($v.gender.$dirty && !$v.gender.required),'main-black' : gender}" 
+            class="gender-select app-input" 
+            name="gender" 
+            v-model="gender">
+                <option disabled value="">Select your gender</option>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+            </select>
+            <span
+            v-if="$v.gender.$dirty && !$v.gender.required"
+            >Gender field is required</span>
+        </div>
+        <div class="app-form__input">
             <input 
             type="text"
             class="app-input"
@@ -87,14 +101,16 @@ export default {
     password: '',
     name: '',
     dateOfBirth: '',
-    city:''
+    city:'',
+    gender:''
   }),
   validations:{
     email: {email,required},
     password: {required,minLength: minLength(6)},
     name:{required},
     dateOfBirth:{required,minLength: minLength(10)},
-    city:{required}
+    city:{required},
+    gender:{required}
   }, 
   computed:{
     error(){
@@ -118,7 +134,8 @@ export default {
         password: this.password,
         name: this.name,
         dateOfBirth: this.dateOfBirth,
-        city: this.city
+        city: this.city,
+        gender: this.gender
       }
       try {
         await this.$store.dispatch('register', formData)

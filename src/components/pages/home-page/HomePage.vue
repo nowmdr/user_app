@@ -22,6 +22,20 @@
                         v-model="copyInfo.dateOfBirth"
                         >
                     </label>
+                    <label class="user-form__input">Gender:
+                        <span v-if="inputDisabled">{{copyInfo.gender}}</span>
+                        <select 
+                        :class="{'main-black' : copyInfo.gender}" 
+                        class="gender-select" 
+                        name="gender" 
+                        v-model="copyInfo.gender"
+                        :disabled="inputDisabled"
+                        v-else>
+                            <option disabled value="">Select your gender</option>
+                            <option value="Female">Female</option>
+                            <option value="Male">Male</option>
+                        </select>
+                    </label>
                     <label class="user-form__input">City: 
                         <input 
                             type="text"
@@ -78,7 +92,8 @@ export default {
     }),
     validations:{
         name:{required},
-        city:{required}
+        city:{required},
+        gender:{required}
     }
 }
 </script>

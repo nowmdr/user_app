@@ -21,13 +21,14 @@ export default{
                 console.log(e)
             }  
         },
-        async updateInfo({dispatch, commit},{name, dateOfBirth,city}){
+        async updateInfo({dispatch, commit},{name, dateOfBirth,city,gender}){
             try {
                 const uid = await dispatch('getUid')
                 await firebase.database().ref(`/users/${uid}/info`).set({
                     dateOfBirth,
                     name,
-                    city
+                    city,
+                    gender
                  })
                 // const info = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val()
                 // commit('setInfo', info)
