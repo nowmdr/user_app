@@ -10,6 +10,9 @@
         flex-direction: column;
         // justify-content: space-around;
         align-items: center;
+        @include breakpoint(lg){
+            width: 70%;
+        }
         @include breakpoint(md){
             width: 80%;
         }

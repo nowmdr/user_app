@@ -9,9 +9,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    error: null
-    // isNavOpen: false
-
+    error: null,
+    currency:null
   },
   mutations: {
     setError(state, error){
@@ -20,18 +19,21 @@ export default new Vuex.Store({
     clearError(state){
       state.error = null
     },
-  //   toggleNav() {
-  //     state.isNavOpen = !state.isNavOpen
-  // }
+    setCurrency(state, currency){
+      state.currency = currency
+    }
   },
   getters:{
-    error: s => s.error
+    error: s => s.error,
+    currency: s => s.currency
   },
   actions: {
-    async  fetchCurrency(){
+    async  fetchCurrency({dispatch,commit}){
       const key = process.env.VUE_APP_FIXER
       const res = await axios.get(`http://data.fixer.io/api/latest?access_key=${key}&symbols=USD,EUR,RUB,BYN`)
-      return await res.data
+      const currency = res.data
+      commit('setCurrency', currency)
+      // return await res.data
     }
   },
   modules: { 

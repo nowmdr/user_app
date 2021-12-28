@@ -6,10 +6,10 @@
     padding: 20px;
     box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
     @include breakpoint(lg){
-        width: 40%;
+        width: 60%;
     }
     @include breakpoint(md){
-        width: 50%;
+        width: 70%;
     }
     @include breakpoint(sm){
         width: 90%;
