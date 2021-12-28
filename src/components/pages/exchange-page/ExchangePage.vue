@@ -8,7 +8,7 @@
                     <input
                     type="number" 
                     v-model="eur" 
-                    v-on:change="exchangeEur()"
+                    @focus="exchange('eur')"
                     placeholder="Enter the amount"
                     >
                     </app-card>
@@ -16,6 +16,7 @@
                     <input
                     type="number" 
                     v-model="byn"
+                    @focus="exchange('byn')"
                     v-on:change="exchangeByn()" 
                     placeholder="Enter the amount"
                     >
@@ -24,12 +25,14 @@
                     <input
                     type="number" 
                     v-model="usd"
+                    @focus="exchange('usd')"
                     v-on:change="exchangeUsd()" 
                     placeholder="Enter the amount"
                     ></app-card>
                 <app-card class="exchange__card">RUB
                     <input
                     type="number" 
+                    @focus="exchange('rub')"
                     v-on:change="exchangeRub()"
                     v-model="rub" 
                     placeholder="Enter the amount"
@@ -47,12 +50,7 @@ export default {
     data:() => ({
         loader: true,
         currency: null,
-        // currencyRates: {
-        //     eur: 0,
-        //     byn: 0,
-        //     usd: 0,
-        //     rub: 0
-        // },
+        watchLock: '',
         eur: 100,
         byn: 0,
         usd: 0,
@@ -61,22 +59,15 @@ export default {
     async mounted(){
         await this.$store.dispatch('fetchCurrency')
         this.currency = Object.assign({}, this.getCurrency);
-        // this.copyCurrency = Object.assign({}, this.currency)
-        // console.log(this.currency.rates.BYN)
-        // this.setCurrencyRates()
         this.exchangeEur()
         this.loader = false
     },
     methods:{
-        // setCurrencyRates(){
-        //     this.currencyRates.eur = this.currency.rates.EUR
-        //     this.currencyRates.byn = this.currency.rates.BYN
-        //     this.currencyRates.usd = this.currency.rates.USD
-        //     this.currencyRates.rub = this.currency.rates.RUB
-        //     console.log(this.currencyRates)
-        // },
+        exchange(name){
+            this.watchLock = name
+        },
         exchangeEur(){
-            this.byn = +(this.eur * this.currency.rates.BYN).toFixed(2)
+            this.byn = (this.eur * this.currency.rates.BYN).toFixed(2)
             this.usd = +(this.eur * this.currency.rates.USD).toFixed(2)
             this.rub = +(this.eur * this.currency.rates.RUB).toFixed(2)
         },
@@ -103,12 +94,26 @@ export default {
     },
     watch:{
         eur: function(){
-        //    this.byn = +(this.eur * this.currencyRates.byn).toFixed(2) 
+            if (this.watchLock == 'eur') {
+               this.exchangeEur() 
+            }
+            
         },
         byn: function(){
-            // this.eur = +(this.byn * this.currencyRates.eur).toFixed(2)
-
-        }
+            if (this.watchLock == 'byn') {
+               this.exchangeByn()  
+            }
+        },
+        usd: function(){
+             if (this.watchLock == 'usd') {
+               this.exchangeUsd()
+            }  
+        },
+        rub: function(){
+             if (this.watchLock == 'rub') {
+               this.exchangeRub()
+            }  
+        },
     }
 }
 </script>
