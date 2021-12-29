@@ -2,15 +2,19 @@
     <div>
         <loader-page v-if="loader"></loader-page>
         <div v-else class="home">
-            <h3 class="title">Hello {{copyInfo.name}}<br>it is your profile info</h3>
+            <h3 class="title"> <span>Hello {{name}}</span><br>it is your profile info</h3>
             <div class="user">
-                <form class="app-form user-form">
+                <app-card>
+                    <form class="user-form">
                     <label class="user-form__input">Name:
                         <input 
                         type="text"
-                        v-model="copyInfo.name"
+                        v-model="name"
                         placeholder="Enter you name..."
-                        :disabled="inputDisabled">
+                        :disabled="inputDisabled"><br>
+                        <span class="error-text"
+                        v-if="$v.name.$dirty && !$v.name.required"
+                        >Name field is empty</span>
                     </label>
                     <label class="user-form__input">
                         Date of birth:
@@ -23,12 +27,12 @@
                         >
                     </label>
                     <label class="user-form__input">Gender:
-                        <span v-if="inputDisabled">{{copyInfo.gender}}</span>
+                        <span v-if="inputDisabled">{{gender}}</span>
                         <select 
                         :class="{'main-black' : copyInfo.gender}" 
                         class="gender-select" 
                         name="gender" 
-                        v-model="copyInfo.gender"
+                        v-model="gender"
                         :disabled="inputDisabled"
                         v-else>
                             <option disabled value="">Select your gender</option>
@@ -41,11 +45,65 @@
                             type="text"
                             :disabled="inputDisabled"
                             placeholder="Enter your city..."
-                            v-model="copyInfo.city">
+                            v-model="city"><br>
+                            <span
+                            class="error-text"
+                            v-if="$v.city.$dirty && !$v.city.required"
+                            >City field is empty</span>
                     </label>
                     <a class="app-link user-form__link" v-if="inputDisabled" @click.prevent="inputDisabled=false">Edit</a>
                     <button class="app-button user-form__button" v-else @click.prevent="uploadData()">Save</button>
                 </form>
+                </app-card>
+                <!-- <form class="app-form user-form">
+                    <label class="user-form__input">Name:
+                        <input 
+                        type="text"
+                        v-model="name"
+                        placeholder="Enter you name..."
+                        :disabled="inputDisabled"><br>
+                        <span class="error-text"
+                        v-if="$v.name.$dirty && !$v.name.required"
+                        >Name field is empty</span>
+                    </label>
+                    <label class="user-form__input">
+                        Date of birth:
+                        <span v-if="inputDisabled">{{copyInfo.dateOfBirth | date('date') }}</span>
+                        <input 
+                        v-else
+                        type="date"
+                        :disabled="inputDisabled"
+                        v-model="copyInfo.dateOfBirth"
+                        >
+                    </label>
+                    <label class="user-form__input">Gender:
+                        <span v-if="inputDisabled">{{gender}}</span>
+                        <select 
+                        :class="{'main-black' : copyInfo.gender}" 
+                        class="gender-select" 
+                        name="gender" 
+                        v-model="gender"
+                        :disabled="inputDisabled"
+                        v-else>
+                            <option disabled value="">Select your gender</option>
+                            <option value="Female">Female</option>
+                            <option value="Male">Male</option>
+                        </select>
+                    </label>
+                    <label class="user-form__input">City: 
+                        <input 
+                            type="text"
+                            :disabled="inputDisabled"
+                            placeholder="Enter your city..."
+                            v-model="city"><br>
+                            <span
+                            class="error-text"
+                            v-if="$v.city.$dirty && !$v.city.required"
+                            >City field is empty</span>
+                    </label>
+                    <a class="app-link user-form__link" v-if="inputDisabled" @click.prevent="inputDisabled=false">Edit</a>
+                    <button class="app-button user-form__button" v-else @click.prevent="uploadData()">Save</button>
+                </form> -->
             </div>
         </div>   
     </div>
@@ -57,6 +115,19 @@ import {required, minLength} from 'vuelidate/lib/validators'
 import './HomePage.scss'
 export default {
   components: { AppCard, LoaderPage },
+  data: () => ({
+        loader: true,
+        inputDisabled: true,
+        copyInfo: null,
+        name: "",
+        city: "",
+        gender: ""
+    }),
+    validations:{
+        name:{required},
+        city:{required},
+        gender:{required}
+    },
     async mounted() {
         if (!Object.keys(this.$store.getters.info).length) {
             await this.$store.dispatch('fetchInfo')
@@ -66,6 +137,8 @@ export default {
         this.copyInfo = Object.assign({}, this.getInfo);
         console.log(this.copyInfo)
         this.loader = false
+        console.log(this.name)
+        this.copyInfo1()
     }, 
     computed:{
         getInfo(){
@@ -73,27 +146,31 @@ export default {
         }
     },
     methods:{
+        copyInfo1(){
+            this.name = this.copyInfo.name
+            this.city = this.copyInfo.city
+            this.gender = this.copyInfo.gender
+            console.log(this.name)
+            console.log(this.city)
+            console.log(this.gender)
+        },
         async uploadData(){
-            // if(this.$v.$invalid){
-            //     this.$v.$touch()
-            //     return
-            // }
+            if(this.$v.$invalid){
+                this.$v.$touch()
+                return
+            }
+            const formData = {
+                name: this.name,
+                dateOfBirth: this.copyInfo.dateOfBirth,
+                city: this.city,
+                gender: this.gender
+            }
             console.log(this.copyInfo)
             this.inputDisabled = true
-            await this.$store.dispatch('updateInfo', this.copyInfo)
+            await this.$store.dispatch('updateInfo', formData)
             await this.$store.dispatch('fetchInfo')
             this.copyInfo = Object.assign({}, this.getInfo);
         }
-    },
-    data: () => ({
-        loader: true,
-        inputDisabled: true,
-        copyInfo: null
-    }),
-    validations:{
-        name:{required},
-        city:{required},
-        gender:{required}
     }
 }
 </script>

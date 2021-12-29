@@ -5,6 +5,9 @@
 html,body{
     height: 100%;
 }
+p,span,a,div{
+  @extend %font-size-regular;
+}
 *{
     font-family: 'Montserrat', sans-serif;
     color: $main-black;
@@ -44,3 +47,8 @@ input[type=number] {
 // input[type="date"]:in-range::-webkit-datetime-edit-text {
 //      	color: transparent; }
 
+.error-text{
+  margin-top: 15px;
+  @extend %font-size-small;
+  color:$main-light-red;
+}

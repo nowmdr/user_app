@@ -1,20 +1,21 @@
 @import '../../../theme/variables.scss';
 .app-card{
     display: flex;
-    min-width: 25%;
+    min-width: 300px;
+    max-width: 95%;
     border-radius: 20px;
     padding: 20px;
     box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
     @include breakpoint(lg){
-        width: 60%;
+
     }
     @include breakpoint(md){
-        width: 70%;
+
     }
     @include breakpoint(sm){
-        width: 90%;
+
     }
     @include breakpoint(xs){
-        width: 95%;
+
     }
 }

@@ -45,10 +45,15 @@
           >Name field is empty</span>
         </div>
         <div class="app-form__input">
-            <input 
+            <input v-if="!typeDate"
+            class="app-input"
+            :class="{invalid: ($v.dateOfBirth.$dirty && !$v.dateOfBirth.required) || ($v.dateOfBirth.$dirty && !$v.dateOfBirth.minLength)}"
+            placeholder="Date of birth..."
+            @focus="typeDate = !typeDate"
+            type="text">
+            <input v-else
             type="date"
             class="app-input"
-            placeholder="Date of birth..."
             v-model="dateOfBirth"
             :class="{invalid: ($v.dateOfBirth.$dirty && !$v.dateOfBirth.required) || ($v.dateOfBirth.$dirty && !$v.dateOfBirth.minLength)}" 
             >
@@ -96,7 +101,8 @@ import './RegisterPage.scss'
 import {email, required, minLength} from 'vuelidate/lib/validators'
 import messages from '../../../utils/messages'
 export default {
-   data: () => ({
+  data: () => ({
+    typeDate:false,
     email: '',
     password: '',
     name: '',
@@ -143,8 +149,7 @@ export default {
         this.$router.push('/home')
       } catch (e) {
         console.log(e)
-      }
-      
+      } 
     }
   }
 }
