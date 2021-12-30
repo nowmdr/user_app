@@ -2,10 +2,11 @@
     <div>
         <loader-page v-if="loader"></loader-page>
         <div v-else class="exchange">
-        <h3 class="title">Exchange on<br>{{this.date | date('date')}}</h3>
+        <h3 class="title">Exchange on<br>{{date | date('date')}}</h3>
             <div class="exchange__container">
                 <app-card class="exchange__card">EUR: 
                     <input
+                    inputmode="numeric"
                     type="text" 
                     v-model="eur" 
                     @focus="exchange('eur')"
@@ -112,10 +113,10 @@ export default {
             this.date = this.currency.date
             console.log(this.currency)
             if (!this.currency.success) {
-            //   this.$error(this.currency.error.info)
+              this.$error(this.currency.error.info)
             } else {
                 // this.exchangeEur()
-                // this.$message(messages['succes_exchange'])
+                this.$message(messages['succes_exchange'])
             }
         },
         clearInput(name){

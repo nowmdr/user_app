@@ -35,8 +35,8 @@ export default new Vuex.Store({
   actions: {
     async  fetchCurrency({dispatch,commit}){
       const key = process.env.VUE_APP_FIXER
-      // const res = await axios.get(`http://data.fixer.io/api/latest?access_key=${key}&symbols=USD,EUR,RUB,PLN`)
-      const res = await axios.get(`https://freecurrencyapi.net/api/v2/latest?apikey=b12958a0-696b-11ec-b60b-f973de7f2eab&base=EUR&symbols=USD,EUR,RUB,PLN`)
+      const res = await axios.get(`http://data.fixer.io/api/latest?access_key=${key}&symbols=USD,EUR,RUB,PLN`)
+      // const res = await axios.get(`https://freecurrencyapi.net/api/v2/latest?apikey=b12958a0-696b-11ec-b60b-f973de7f2eab&base=EUR&symbols=USD,EUR,RUB,PLN`)
       
       const currency = res.data
       console.log(currency)
@@ -45,7 +45,7 @@ export default new Vuex.Store({
         commit('setCurrency', currency)
         commit('setBackupCurrency', currency)
       } else {
-        // commit('setError', currency.error.info)
+        commit('setError', currency.error.info)
         commit('setCurrency', currency)
       }
       
