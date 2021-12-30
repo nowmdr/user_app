@@ -10,8 +10,13 @@
                     v-model="eur" 
                     @focus="exchange('eur')"
                     placeholder="Enter the amount"
-                    ><span v-if="this.calcEur">{{this.calc}}</span>
-                    </app-card>
+                    >
+                    <div v-if="this.calcEur" class="exchange__card-badge">
+                        <copy-button :copy="this.eur"></copy-button>
+                        <clear-button @click="clearInput('eur')"></clear-button>
+                        <span>{{this.calc}}</span>
+                    </div>
+                </app-card>
                 <app-card class="exchange__card">PLN:
                     <input
                     type="text" 
@@ -19,7 +24,12 @@
                     @focus="exchange('pln')"
                     v-on:change="exchangePln()" 
                     placeholder="Enter the amount"
-                    ><span v-if="this.calcPln">{{this.calc}}</span>
+                    >
+                    <div v-if="this.calcPln" class="exchange__card-badge">
+                        <copy-button :copy="this.pln"></copy-button>
+                        <clear-button @click="clearInput('pln')"></clear-button>
+                        <span>{{this.calc}}</span>
+                    </div>
                     </app-card>
                 <app-card class="exchange__card">USD:
                     <input
@@ -28,7 +38,12 @@
                     @focus="exchange('usd')"
                     v-on:change="exchangeUsd()" 
                     placeholder="Enter the amount"
-                    ><span v-if="this.calcUsd">{{this.calc}}</span>
+                    >
+                    <div v-if="this.calcUsd" class="exchange__card-badge">
+                        <copy-button :copy="this.usd"></copy-button>
+                        <clear-button @click="clearInput('usd')"></clear-button>
+                        <span>{{this.calc}}</span>
+                    </div>
                     </app-card>
                 <app-card class="exchange__card">RUB:
                     <input
@@ -37,12 +52,14 @@
                     v-on:change="exchangeRub()"
                     v-model="rub" 
                     placeholder="Enter the amount"
-                    ><span v-if="this.calcRub">{{this.calc}}</span>
+                    >
+                    <div v-if="this.calcRub" class="exchange__card-badge">
+                        <copy-button :copy="this.rub"></copy-button>
+                        <clear-button @click="clearInput('rub')"></clear-button>
+                        <span>{{this.calc}}</span>
+                    </div>
                     </app-card>
             </div>
-            <!-- <div>
-                <copy-button></copy-button>
-            </div> -->
             <refresh-button 
             @click="refresh()"
             class="exchange__refresh-button"></refresh-button>
@@ -56,8 +73,9 @@ import LoaderPage from '../loader-page/LoaderPage.vue'
 import RefreshButton from '../../UI/refresh-button/refreshButton.vue'
 import messages from '../../../utils/messages'
 import CopyButton from '../../UI/copy-button/CopyButton.vue'
+import ClearButton from '../../UI/clear-button/ClearButton.vue'
 export default {
-  components: { AppCard, LoaderPage, RefreshButton, CopyButton },
+  components: { AppCard, LoaderPage, RefreshButton, CopyButton, ClearButton },
     data:() =>({
         loader: true,
         currency: null,
@@ -100,16 +118,47 @@ export default {
                 this.$message(messages['succes_exchange'])
             }
         },
+        clearInput(name){
+            if (name == 'eur') {
+                this.eur = ''
+            } else if (name == 'pln') {
+                this.pln = ''
+            } else if (name == 'usd') {
+                this.usd =''
+            } else if (name == 'rub') {
+                this.rub = ''
+            }
+        },
         exchange(name){
             this.watchLock = name
             this.calc = ''
+            if (name == 'eur') {
+                this.calcPln = false
+                this.calcEur = true
+                this.calcUsd = false
+                this.calcRub = false
+            } else if (name == 'pln') {
+                this.calcPln = true
+                this.calcEur = false
+                this.calcUsd = false
+                this.calcRub = false
+            } else if (name == 'usd') {
+                this.calcPln = false
+                this.calcEur = false
+                this.calcUsd = true
+                this.calcRub = false
+            } else if (name == 'rub') {
+                this.calcPln = false
+                this.calcEur = false
+                this.calcUsd = false
+                this.calcRub = true
+            }
         },
         exchangeEur(){
             this.eur = this.eur.replace(/[^0-9\.\,\+\-\*\/]/g,'');
             for(let i = 0; i < this.eur.length; i++){
-                console.log(this.eur.charAt(i));
                 if (this.eur.charAt(i) == "+" || "-" || "*" || "/") {
-                    this.calc = eval(this.eur)
+                    this.calc = eval(this.eur).toFixed(2)
                     console.log(this.calc)
                     this.pln = (this.calc * this.currency.rates.PLN).toFixed(2)
                     this.usd = (this.calc * this.currency.rates.USD).toFixed(2)
@@ -122,7 +171,7 @@ export default {
             for(let i = 0; i < this.pln.length; i++){
                 console.log(this.pln.charAt(i));
                 if (this.pln.charAt(i) == "+" || "-" || "*" || "/") {
-                    this.calc = eval(this.pln)
+                    this.calc = eval(this.pln).toFixed(2)
                     console.log(this.calc)
                     this.eur = +(this.calc / this.currency.rates.PLN).toFixed(2)
                     this.usd = +(this.eur * this.currency.rates.USD).toFixed(2)
@@ -134,7 +183,7 @@ export default {
             this.usd = this.usd.replace(/[^0-9\.\,\+\-\*\/]/g,'');
             for(let i = 0; i < this.usd.length; i++){
                 if (this.usd.charAt(i) == "+" || "-" || "*" || "/") {
-                    this.calc = eval(this.usd)
+                    this.calc = eval(this.usd).toFixed(2)
                     this.eur = +(this.calc / this.currency.rates.USD).toFixed(2)
                     this.pln = +(this.eur * this.currency.rates.PLN).toFixed(2)
                     this.rub = +(this.eur * this.currency.rates.RUB).toFixed(2)
@@ -145,7 +194,7 @@ export default {
             this.rub = this.rub.replace(/[^0-9\.\,\+\-\*\/]/g,'');
             for(let i = 0; i < this.rub.length; i++){
                 if (this.rub.charAt(i) == "+" || "-" || "*" || "/") {
-                    this.calc = eval(this.rub)
+                    this.calc = eval(this.rub).toFixed(2)
                     this.eur = +(this.calc / this.currency.rates.RUB).toFixed(2)
                     this.pln = +(this.eur * this.currency.rates.PLN).toFixed(2)
                     this.usd = +(this.eur * this.currency.rates.USD).toFixed(2)
@@ -162,7 +211,7 @@ export default {
         },
         getBackupCurrency(){
             return this.$store.getters.backupCurrency
-        }
+        },
     },
     watch:{
         error(){
@@ -178,7 +227,7 @@ export default {
                     this.calcRub = false
                     this.exchangeEur()
                     if (this.eur == '') {
-                        this.calc = ''
+                        this.calcEur = false
                     }
                 } catch (e) {}
             }

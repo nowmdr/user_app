@@ -21,12 +21,12 @@
 	box-shadow: $shadow-black;
 	padding: 8px;
 	border: 0;
-	border-radius: 4px;
+	border-radius: 10px;
 	width: 40px;
 	height: 40px;
   display: block;
   .icon {
-  fill: #323232;
+  fill: $main-black;
   }
     &:hover {
         .icon {

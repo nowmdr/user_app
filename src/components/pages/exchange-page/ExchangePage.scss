@@ -7,8 +7,11 @@
         position: relative;
     }
     &__card{
+        display: flex;
+        align-items: center;
         color: $main-blue;
         font-weight: 700;
+        margin-bottom: 20px;
         input{
             &::placeholder{
                 color: $main-gray;
@@ -26,11 +29,15 @@
             font-size: inherit;
             padding-left: 10px;
         }
-        margin-bottom: 20px;
+        &-badge{
+            display: flex;
+            align-items: center;
+        }
     }
     &__refresh-button{
-        position: absolute;
-        top: 20%;
-        right: 10%;
+        margin: 0 auto;
+        // position: absolute;
+        // top: 70%;
+        // right: 45%;
     }
 }

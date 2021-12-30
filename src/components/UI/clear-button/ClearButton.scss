@@ -1,11 +1,11 @@
 @import '../../../theme/variables.scss';
-.copy-button{
+.clear-button{
     width: 20px;
     height: 20px;
     cursor: pointer;
     &:hover{
         ion-icon {
-            color: $main-blue;
+            color: $main-light-red;
         }
     }
     ion-icon {
