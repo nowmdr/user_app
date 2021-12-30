@@ -112,10 +112,10 @@ export default {
             this.date = this.currency.date
             console.log(this.currency)
             if (!this.currency.success) {
-              this.$error(this.currency.error.info)
+            //   this.$error(this.currency.error.info)
             } else {
                 // this.exchangeEur()
-                this.$message(messages['succes_exchange'])
+                // this.$message(messages['succes_exchange'])
             }
         },
         clearInput(name){
