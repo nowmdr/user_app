@@ -42,6 +42,10 @@ export default {
                 name: 'Exchange',
                 route: '/exchange',
             },
+            {
+                name: 'Posts',
+                route: '/posts',
+            },
         ],
     }),
     methods:{

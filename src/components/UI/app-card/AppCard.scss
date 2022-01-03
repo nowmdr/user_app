@@ -6,6 +6,7 @@
     border-radius: 20px;
     padding: 20px;
     box-shadow: $shadow-black;
+    background-color: $main-white;
     @include breakpoint(lg){
 
     }

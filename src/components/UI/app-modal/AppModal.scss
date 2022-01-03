@@ -1,0 +1,28 @@
+@import '../../../theme/variables.scss';
+.app-modal{
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    transition: opacity 0.3s ease;
+    background: rgba($color: #000000, $alpha: 0.5);
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    cursor: pointer;
+    &__content{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        // background-color: $main-white;
+        // background-color: transparent;
+        // width: 80%;
+        // height: auto;
+        // padding: 20px;
+        // border-radius: 20px;
+    }
+}

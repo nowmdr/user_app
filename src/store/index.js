@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import auth from './auth'
 import info from './info'
+import posts from './posts'
 import axios from 'axios'
 import burger from './burger'
 
@@ -53,6 +54,6 @@ export default new Vuex.Store({
     }
   },
   modules: { 
-    auth, info, burger
+    auth, info, burger,posts
   }
 })

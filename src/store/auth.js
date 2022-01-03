@@ -23,25 +23,18 @@ export default{
                     city,
                     gender
                  })
+                 const post = {
+                    title: 'Hello, it is your first post',
+                    body:'Hello it is small body of your post'
+                 }
+                 await firebase.database().ref(`/users/${uid}/posts`).set({
+                    post
+                 })
              } catch (e) {
                 commit('setError', e)
                 throw(e)
              }
          },
-        //  async editData({dispatch, commit},{name, dateOfBirth, phone, address,about}){
-        //     try {
-        //         const uid = await dispatch('getUid')
-        //         await firebase.database().ref(`/users/${uid}/info`).set({
-        //             name,
-        //             dateOfBirth,
-        //             address,
-        //             about,
-        //             phone
-        //         })
-        //     } catch (e) {
-        //         console.log(e)
-        //     }
-        //  },
          getUid(){
              const user = firebase.auth().currentUser
              return user ? user.uid : null

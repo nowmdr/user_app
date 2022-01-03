@@ -40,6 +40,12 @@ const routes = [
         meta: {auth: true},
         component: () => import('../components/pages/exchange-page/ExchangePage.vue'),
       },
+      {
+        path: '/posts',
+        name: 'Main.PostsPage',
+        meta: {auth: true},
+        component: () => import('../components/pages/post-components/posts-page/PostsPage.vue'),
+      },
       { // *404 page
         path: '/*',
         name: 'main.404',

@@ -102,7 +102,7 @@ import {email, required, minLength} from 'vuelidate/lib/validators'
 import messages from '../../../utils/messages'
 export default {
   data: () => ({
-    typeDate:false,
+    typeDate:false, 
     email: '',
     password: '',
     name: '',
