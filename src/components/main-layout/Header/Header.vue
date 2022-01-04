@@ -3,7 +3,7 @@
         <div class="header__container">
             <nav class="header__menu menu">
                 <BurgerButton/>
-                <Sidebar/>
+                <Sidebar :links="this.links"/>
                 <ul class="menu__list">
                     <li v-for="link in links" :key="link.name"
                     class="menu__item">

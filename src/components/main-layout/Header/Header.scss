@@ -8,10 +8,7 @@
     display: flex;
     align-items: center;
     &__container{
-        padding-left: 1%;
-        padding-right: 1%;
-        width: 1024px;
-        margin: 0 auto;
+        @extend %container
     }
 }
 .menu{

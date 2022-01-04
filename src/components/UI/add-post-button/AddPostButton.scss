@@ -1,20 +1,11 @@
 @import '../../../theme/variables.scss';
 .add-post-button{
-    width: 30px;
-    height: 30px;
-    box-shadow: $shadow-black;
-    border-radius: 10px;
-    background-color: $main-white;
     display: flex;
     align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    &:hover{
-        ion-icon{
-            width: 70%;    
-            height: 70%;
-            color: $main-blue;
-            z-index: 0;
-        }
+    ion-icon{
+        color: $main-white;
+        z-index: 0;
+        margin-left: 5px;
     }
+    @extend %app-button
 }

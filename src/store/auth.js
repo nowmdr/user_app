@@ -4,6 +4,7 @@ export default{
          async login({dispatch, commit},{email, password}){
              try{
                 await firebase.auth().signInWithEmailAndPassword(email, password)
+                await dispatch('createCurrency')
              } catch(e){
                 commit('setError', e)
                 throw e
@@ -17,19 +18,14 @@ export default{
              try {
                  await firebase.auth().createUserWithEmailAndPassword(email, password)
                  const uid = await dispatch('getUid')
+                 await dispatch('createCurrency')
                  await firebase.database().ref(`/users/${uid}/info`).set({
                     dateOfBirth,
                     name,
                     city,
                     gender
                  })
-                 const post = {
-                    title: 'Hello, it is your first post',
-                    body:'Hello it is small body of your post'
-                 }
-                 await firebase.database().ref(`/users/${uid}/posts`).set({
-                    post
-                 })
+                 
              } catch (e) {
                 commit('setError', e)
                 throw(e)

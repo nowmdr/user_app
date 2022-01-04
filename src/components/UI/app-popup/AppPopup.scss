@@ -1,0 +1,19 @@
+@import '../../../theme/variables.scss';
+.popup{
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    z-index: 10000;
+    min-width: 400px;
+    min-height: 100px;
+    box-shadow: $shadow-black;
+    background-color: $main-success;
+    border: none;
+    border-radius: 20px;
+    padding: 20px;
+    &__header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}

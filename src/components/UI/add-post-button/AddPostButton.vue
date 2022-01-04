@@ -1,5 +1,5 @@
 <template>
-    <div class="add-post-button" @click="click()">
+    <div class="add-post-button" @click="click()">Create post
         <ion-icon name="add-outline"></ion-icon>
     </div>
 </template>

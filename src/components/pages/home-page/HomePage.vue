@@ -2,6 +2,7 @@
     <div>
         <loader-page v-if="loader"></loader-page>
         <div v-else class="home">
+            <!-- <app-popup :messages="messages" ></app-popup> -->
             <app-modal :show.sync="modalVisible">
                 <post-form></post-form>
             </app-modal>
@@ -56,7 +57,7 @@
                     </label>
                     <a class="app-link user-form__link" v-if="inputDisabled" @click.prevent="inputDisabled=false">Edit data</a>
                     <button class="app-button user-form__button" v-else @click.prevent="uploadData()">Save</button>
-                    <div class="user-form__post-button">Add new post
+                    <div class="user-form__post-button">
                         <add-post-button class="post-button" @click="modalOpen()"></add-post-button>
                     </div>
                 </form>
@@ -73,9 +74,13 @@ import './HomePage.scss'
 import AddPostButton from '../../UI/add-post-button/AddPostButton.vue'
 import AppModal from '../../UI/app-modal/AppModal.vue'
 import PostForm from '../post-components/post-form/PostForm.vue'
+import AppPopup from '../../UI/app-popup/AppPopup.vue'
 export default {
-  components: { AppCard, LoaderPage, AddPostButton, AppModal, PostForm },
+  components: { AppCard, LoaderPage, AddPostButton, AppModal, PostForm, AppPopup },
   data: () => ({
+        messages: [
+            {name: 'notification name', id: Date.now().toLocaleString()}
+        ],
         loader: true,
         inputDisabled: true,
         modalVisible: false,

@@ -1,0 +1,17 @@
+@import '../../../theme/variables.scss';
+.delete-button{
+    display: flex;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    &:hover{
+        ion-icon {
+            color: $main-light-red;
+        }
+    }
+    ion-icon{
+        width: 80%;
+        height: 80%;
+    }
+}

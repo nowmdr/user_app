@@ -1,0 +1,12 @@
+@import '../../../../theme/variables.scss';
+.post{
+    &__container{
+        @extend %container
+    }
+    &__title{
+        margin: 20px auto;
+    }
+    &__body{
+        line-height: 1.5;
+    }
+}

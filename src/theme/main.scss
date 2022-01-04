@@ -1,23 +1,27 @@
 // @import '~materialize-css/dist/css/materialize.min.css';
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;700&display=swap');
 @import './variables.scss';
 
 html,body{
     height: 100%;
     overflow-x: hidden;
+    background-color: $main-background-white;
 }
 p,span,a,div{
   @extend %font-size-regular;
 }
+h1,h2,h3,h4,h5,h6{
+  font-family: 'Montserrat', sans-serif;
+}
 *{
-    font-family: 'Montserrat', sans-serif;
-    color: $main-black;
-    list-style: none;
-    text-decoration: none;
-    box-sizing: border-box;
-    transition: all 0.5s ease;
-    padding: 0;
-    margin: 0;
+  font-family: 'Roboto', sans-serif;
+  color: $main-black;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  transition: all 0.5s ease;
+  padding: 0;
+  margin: 0;
 }
 .main{
     height: 100vh;

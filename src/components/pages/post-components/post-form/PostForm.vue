@@ -1,6 +1,12 @@
 <template>
     <app-card>
-        <form class="post-form">
+        <div v-if="success" class="post-success">
+            <h3 class="post-success__title title">Hooray!<br>The post has been successfully created.</h3>
+            <div class="post-success__links">
+                <add-post-button class="post-button" @click="success=false"></add-post-button>
+            </div>
+        </div>
+        <form v-else class="post-form">
             <h3 class="title post-form__title">New post</h3>
             <input 
             v-model="title"
@@ -9,13 +15,11 @@
             placeholder="Post title"
             type="text">
             <span v-if="$v.title.$dirty && !$v.title.reqiured">Title field is required</span>
-            <div>
-                <textarea 
-                v-model="body"
-                class="app-input post-form__text" 
-                placeholder="Type your post here"
-                ></textarea>
-            </div>
+            <textarea 
+            v-model="body"
+            class="app-input post-form__text" 
+            placeholder="Type your post here, you can use HTML tags also"
+            ></textarea>
             <button @click.prevent="createPost()" class="app-button post-form__send-button">Create new post</button>
         </form>
     </app-card>
@@ -24,11 +28,13 @@
 import AppCard from '../../../UI/app-card/AppCard.vue'
 import {required, minLength} from 'vuelidate/lib/validators'
 import './PostForm.scss'
+import AddPostButton from '../../../UI/add-post-button/AddPostButton.vue'
 export default {
-    components: { AppCard },
+    components: { AppCard, AddPostButton },
     data:() => ({
         title: '',
-        body: ' '
+        body: '',
+        success: false,
     }),
     validations:{
         title:{required, minLength},
@@ -49,11 +55,9 @@ export default {
                 this.$v.$reset()
                 this.title = ''
                 this.body = ''
-                this.$message('Post was created!')
+                this.success = true
             } catch (e) {}
-            
-        }
-    },
-    
+        },
+    }, 
 }
 </script>

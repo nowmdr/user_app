@@ -37,6 +37,29 @@ export default{
             } catch (e) {
                 commit('setError', e)
             }  
+        },
+        async updatePosts({dispatch, commit},{posts}){
+            try {
+                const uid = await dispatch('getUid')
+                await firebase.database().ref(`/users/${uid}/posts`).set({
+                    posts
+                 })
+                //  return{
+                //      title,body, id: post.key
+                //  }
+            } catch (e) {
+                commit('setError', e)
+            }  
+        },
+        async deletePost({dispatch, commit},{id}){
+            try {
+                const uid = await dispatch('getUid')
+                await firebase.database().ref(`/users/${uid}/posts/${id}`).remove()
+                // undefined? WTF?
+                console.log(id)
+            } catch (e) {
+                commit('setError', e)
+            }  
         }
     },
     getters:{

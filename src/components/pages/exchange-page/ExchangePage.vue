@@ -2,7 +2,7 @@
     <div>
         <loader-page v-if="loader"></loader-page>
         <div v-else class="exchange">
-        <h3 class="title">Exchange on<br>{{date | date('date')}}</h3>
+        <h3 class="title">Exchange on<br>{{ currency.date | date('date')}}</h3>
             <div class="exchange__container">
                 <app-card class="exchange__card">EUR: 
                     <input
@@ -13,7 +13,7 @@
                     placeholder="Enter the amount"
                     >
                     <div v-if="this.calcEur" class="exchange__card-badge">
-                        <copy-button :copy="this.eur"></copy-button>
+                        <copy-button class="card-badge__copy" :copy="this.eur"></copy-button>
                         <clear-button @click="clearInput('eur')"></clear-button>
                         <span>{{this.calc}}</span>
                     </div>
@@ -27,7 +27,7 @@
                     placeholder="Enter the amount"
                     >
                     <div v-if="this.calcPln" class="exchange__card-badge">
-                        <copy-button :copy="this.pln"></copy-button>
+                        <copy-button class="card-badge__copy" :copy="this.pln"></copy-button>
                         <clear-button @click="clearInput('pln')"></clear-button>
                         <span>{{this.calc}}</span>
                     </div>
@@ -41,7 +41,7 @@
                     placeholder="Enter the amount"
                     >
                     <div v-if="this.calcUsd" class="exchange__card-badge">
-                        <copy-button :copy="this.usd"></copy-button>
+                        <copy-button class="card-badge__copy" :copy="this.usd"></copy-button>
                         <clear-button @click="clearInput('usd')"></clear-button>
                         <span>{{this.calc}}</span>
                     </div>
@@ -55,7 +55,7 @@
                     placeholder="Enter the amount"
                     >
                     <div v-if="this.calcRub" class="exchange__card-badge">
-                        <copy-button :copy="this.rub"></copy-button>
+                        <copy-button class="card-badge__copy" :copy="this.rub"></copy-button>
                         <clear-button @click="clearInput('rub')"></clear-button>
                         <span>{{this.calc}}</span>
                     </div>
@@ -82,35 +82,24 @@ export default {
         currency: null,
         watchLock: '',
         calc:'',
-        date: '',
         calcPln:false,
         calcEur:false,
         calcUsd:false,
         calcRub:false,
-        eur: '',
+        eur: 100,
         pln: '',
         usd: '',
         rub: ''
     }),
     async mounted(){
-        if (this.getBackupCurrency) {
-            this.currency = this.getBackupCurrency
-            this.date = this.currency.date
-            // this.exchangeEur()
-            console.log("backup")
-        } else {
-            this.date = new Date()
-            if (!this.pln) {
-                this.$message('Please refresh exchange data')
-            }
-        }
+        await this.$store.dispatch('getCurrency')
+        this.currency = this.getCurrency
         this.loader = false
     },
     methods:{
         async refresh(){
             await this.$store.dispatch('fetchCurrency')
-            this.currency = Object.assign({}, this.getCurrency);
-            this.date = this.currency.date
+            this.currency = this.getCurrency
             console.log(this.currency)
             if (!this.currency.success) {
               this.$error(this.currency.error.info)
@@ -209,9 +198,6 @@ export default {
         },
         error(){
             return this.$store.getters.error
-        },
-        getBackupCurrency(){
-            return this.$store.getters.backupCurrency
         },
     },
     watch:{

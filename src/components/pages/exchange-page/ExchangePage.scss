@@ -9,9 +9,11 @@
     &__card{
         display: flex;
         align-items: center;
+        position: relative;
         color: $main-blue;
         font-weight: 700;
         margin-bottom: 20px;
+        min-height: 70px;
         input{
             &::placeholder{
                 color: $main-gray;
@@ -32,6 +34,16 @@
         &-badge{
             display: flex;
             align-items: center;
+            span{
+                position: absolute;
+                bottom: 5px;
+                right: 25px;
+                color: $main-gray;
+                @extend %font-size-small
+            }
+            .card-badge__copy{
+                margin-right: 10px;
+            }
         }
     }
     &__refresh-button{

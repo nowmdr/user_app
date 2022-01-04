@@ -5,6 +5,7 @@ import info from './info'
 import posts from './posts'
 import axios from 'axios'
 import burger from './burger'
+import firebase from 'firebase/compat/app'
 
 Vue.use(Vuex)
 
@@ -12,7 +13,6 @@ export default new Vuex.Store({
   state: {
     error: null,
     currency:null,
-    backupCurrency: null
   },
   mutations: {
     setError(state, error){
@@ -24,14 +24,10 @@ export default new Vuex.Store({
     setCurrency(state, currency){
       state.currency = currency
     },
-    setBackupCurrency(state,currency){
-      state.backupCurrency = currency
-    }
   },
   getters:{
     error: s => s.error,
     currency: s => s.currency,
-    backupCurrency: s => s.backupCurrency
   },
   actions: {
     async  fetchCurrency({dispatch,commit}){
@@ -41,16 +37,41 @@ export default new Vuex.Store({
       
       const currency = res.data
       console.log(currency)
-      
-      if (currency.success) {
-        commit('setCurrency', currency)
-        commit('setBackupCurrency', currency)
-      } else {
-        commit('setError', currency.error.info)
-        commit('setCurrency', currency)
-      }
+      commit('setCurrency', currency)
+      // if (currency.success) {
+      //   commit('setCurrency', currency)
+      //   commit('setBackupCurrency', currency)
+      // } else {
+      //   commit('setError', currency.error.info)
+      //   commit('setCurrency', currency)
+      // }
       
       // return await res.data
+    },
+    async createCurrency({dispatch, commit}){
+    const uid = await dispatch('getUid')
+    const currency = await firebase.database().ref(`/users/${uid}/exchange`).set({
+      base: "EUR",
+      date: "2022-01-03",
+      rates:{
+          EUR: 1,
+          PLN: 4.589025,
+          RUB: 84.508938,
+          USD: 1.135209,
+      },
+      success: true,
+      timestamp: 1641215943
+    })
+    },
+    async getCurrency({dispatch, commit}){
+      try {
+        const uid = await dispatch('getUid')
+        const currency = (await firebase.database().ref(`/users/${uid}/exchange`).once('value')).val()
+        commit('setCurrency', currency)
+        console.log(currency)
+    } catch (e) {
+      commit('setError', e)
+    }  
     }
   },
   modules: { 

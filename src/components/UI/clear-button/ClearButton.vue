@@ -1,6 +1,6 @@
 <template>
     <div @click="click()" class="clear-button">
-        <ion-icon name="trash-outline"></ion-icon>
+        <ion-icon name="backspace-outline"></ion-icon>
     </div>
 </template>
 <script>

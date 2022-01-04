@@ -22,22 +22,12 @@
 <script>
 import "./Sidebar.scss"
 export default {
-    data: () => ({
-        links: [
-        {
-            name: 'Home',
-            route: '/home',
-        },
-        {
-            name: 'Weather',
-            route: '/weather',
-        },
-        {
-            name: 'Exchange',
-            route: '/exchange',
-        },
-    ],
-    }),
+    props:{
+        links:{
+            type: Array,
+            required: true
+        }
+    },
     methods: {
         async logout(){
             this.$store.commit('closeSidebar')

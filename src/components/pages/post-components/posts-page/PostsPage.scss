@@ -1,0 +1,51 @@
+@import '../../../../theme/variables.scss';
+.posts-page{
+    &__options{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        @extend %container
+    }
+    &__container{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+    }
+}
+.post-card{
+    // width: 300px;
+    // height: 350px;
+    display: flex;
+    flex-direction: column;
+    margin: 2%;
+    cursor: pointer;
+    &:hover{
+        transform: translateY(-10px) scale(1.05)
+    }
+    &__title{
+        margin-bottom: 15px;
+    }
+    &__body{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -moz-box;
+        -moz-box-orient: vertical;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        line-clamp: 5;
+        box-orient: vertical;
+    }
+}    
+.post-item {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .post-enter-active, .post-leave-active {
+    transition: all 1s;
+  }
+  .post-enter, .post-leave-to /* .list-leave-active до версии 2.1.8 */ {
+    opacity: 0;
+    transform: translateY(30px);
+  }
