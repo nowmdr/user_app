@@ -2,7 +2,8 @@
     <div>
         <loader-page v-if="loader"></loader-page>
         <div v-else class="home">
-            <!-- <app-popup :messages="messages" ></app-popup> -->
+            <!-- :messages="messages" -->
+            
             <app-modal :show.sync="modalVisible">
                 <post-form></post-form>
             </app-modal>
@@ -62,6 +63,10 @@
                     </div>
                 </form>
                 </app-card>
+                <button class="app-button" @click="success()">Push Success</button>
+                <button class="app-button" @click="warning()">Push Warning</button>
+                <button class="app-button" @click="error()">Push Error</button>
+                <button class="app-button" @click="info()">Push Info</button>
             </div>
         </div>   
     </div>
@@ -75,12 +80,11 @@ import AddPostButton from '../../UI/add-post-button/AddPostButton.vue'
 import AppModal from '../../UI/app-modal/AppModal.vue'
 import PostForm from '../post-components/post-form/PostForm.vue'
 import AppPopup from '../../UI/app-popup/AppPopup.vue'
+import messages from '../../../utils/messages'
 export default {
   components: { AppCard, LoaderPage, AddPostButton, AppModal, PostForm, AppPopup },
   data: () => ({
-        messages: [
-            {name: 'notification name', id: Date.now().toLocaleString()}
-        ],
+        // messages: [],
         loader: true,
         inputDisabled: true,
         modalVisible: false,
@@ -109,11 +113,24 @@ export default {
     computed:{
         getInfo(){
             return this.$store.getters.info
-        }
+        },
     },
     methods:{
+        success(){
+            this.$popupSuccess('Woooooow')
+        },
+        warning(){
+            this.$popupWarning('Woooooow')
+        },
+        error(){
+            this.$popupError('Woooooow')
+        },
+        info(){
+            this.$popupInfo('Woooooow')
+        },
         modalOpen(){
             this.modalVisible = true
+            
         },
         copyInfo1(){
             this.name = this.copyInfo.name
@@ -139,6 +156,7 @@ export default {
             await this.$store.dispatch('updateInfo', formData)
             await this.$store.dispatch('fetchInfo')
             this.copyInfo = Object.assign({}, this.getInfo);
+            this.$popupSuccess('Your data has been successfully updated')
         }
     }
 }

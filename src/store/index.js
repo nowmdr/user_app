@@ -5,6 +5,7 @@ import info from './info'
 import posts from './posts'
 import axios from 'axios'
 import burger from './burger'
+import popup from './popup'
 import firebase from 'firebase/compat/app'
 
 Vue.use(Vuex)
@@ -75,6 +76,6 @@ export default new Vuex.Store({
     }
   },
   modules: { 
-    auth, info, burger,posts
+    auth, info, burger,posts,popup
   }
 })

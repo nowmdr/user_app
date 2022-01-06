@@ -18,6 +18,7 @@
                     autocomplete="off">
                 </form>
             </app-card>
+            
         </div>
     </div>
 </template>
@@ -26,6 +27,7 @@ import './WeatherPage.scss'
 import axios from 'axios'
 import AppCard from '../../UI/app-card/AppCard.vue'
 import LoaderPage from '../loader-page/LoaderPage.vue'
+import messages from '../../../utils/messages'
 export default {
   components: { AppCard, LoaderPage },
     
@@ -81,9 +83,9 @@ export default {
 
                 this.cityFound = false;
             } catch (e) {
-                console.log(e)
+                // console.log(e)
                 this.cityFound = true;
-                this.$message('No city found')
+                this.$popupError('City not found')
             }
         }
     },

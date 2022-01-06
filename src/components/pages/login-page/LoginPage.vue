@@ -56,7 +56,7 @@ export default {
   watch:{
     error(fbError){
       console.log(fbError.code)
-      this.$error(messages[fbError.code] || 'Something wrong, try again') 
+      this.$popupError(messages[fbError.code] || 'Something wrong, try again') 
     }
   }, 
   validations:{
@@ -82,7 +82,7 @@ export default {
   },
   mounted(){
     if (messages[this.$route.query.message]) {
-        this.$message(messages[this.$route.query.message])
+        this.$popupInfo(messages[this.$route.query.message])
     }
   }
 }

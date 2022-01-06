@@ -126,7 +126,7 @@ export default {
   watch:{
     error(fbError){
       console.log(fbError.code)
-      this.$error(messages[fbError.code] || 'Something went wrong') 
+      this.$popupError(messages[fbError.code] || 'Something went wrong') 
     }
   }, 
   methods:{
