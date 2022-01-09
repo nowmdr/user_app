@@ -1,11 +1,13 @@
 // @import '~materialize-css/dist/css/materialize.min.css';
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 @import './variables.scss';
 
 html,body{
     height: 100%;
     overflow-x: hidden;
     background-color: $main-background-white;
+    scroll-behavior: smooth;
 }
 p,span,a,div{
   @extend %font-size-regular;
@@ -14,7 +16,8 @@ h1,h2,h3,h4,h5,h6{
   font-family: 'Montserrat', sans-serif;
 }
 *{
-  font-family: 'Roboto', sans-serif;
+  // font-family: 'Roboto', sans-serif;
+  font-family: 'Poppins', sans-serif;
   color: $main-black;
   list-style: none;
   text-decoration: none;

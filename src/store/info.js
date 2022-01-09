@@ -17,23 +17,25 @@ export default{
                 const uid = await dispatch('getUid')
                 const info = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val()
                 commit('setInfo', info)
+                return info
             } catch (e) {
-                console.log(e)
+                commit('setError', e)
             }  
         },
-        async updateInfo({dispatch, commit},{name, dateOfBirth,city,gender}){
+        async updateInfo({dispatch, commit},{name, dateOfBirth,city,gender,cityOfWeather}){
             try {
                 const uid = await dispatch('getUid')
                 await firebase.database().ref(`/users/${uid}/info`).set({
                     dateOfBirth,
                     name,
                     city,
-                    gender
+                    gender,
+                    cityOfWeather
                  })
                 // const info = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val()
-                // commit('setInfo', info)
+                commit('setInfo', info)
             } catch (e) {
-                console.log(e)
+                commit('setError', e)
             }  
         }
     },

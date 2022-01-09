@@ -5,7 +5,6 @@
 </template>
 <script>
 import './CopyButton.scss'
-import messages from '../../../utils/messages'
 export default {
     props:{
         copy:{
@@ -20,7 +19,7 @@ export default {
 
                 navigator.clipboard.writeText(result)
                 // this.$emit('click')
-                this.$message('Data copied')
+                this.$popupInfo('Data copied')
             } else {
                 this.$error('Nothing to copie')
             }

@@ -141,6 +141,7 @@ export default {
         name: this.name,
         dateOfBirth: this.dateOfBirth,
         city: this.city,
+        cityOfWeather: this.city,
         gender: this.gender
       }
       try {

@@ -23,12 +23,12 @@
                     </label>
                     <label class="user-form__input">
                         Date of birth:
-                        <span v-if="inputDisabled">{{copyInfo.dateOfBirth | date('date') }}</span>
+                        <span v-if="inputDisabled">{{dateOfBirth | date('date') }}</span>
                         <input 
                         v-else
                         type="date"
                         :disabled="inputDisabled"
-                        v-model="copyInfo.dateOfBirth"
+                        v-model="dateOfBirth"
                         >
                     </label>
                     <label class="user-form__input">Gender:
@@ -56,6 +56,17 @@
                             v-if="$v.city.$dirty && !$v.city.required"
                             >City field is empty</span>
                     </label>
+                    <label class="user-form__input">Weather city: 
+                        <input 
+                            type="text"
+                            :disabled="inputDisabled"
+                            placeholder="Type here city of weather"
+                            v-model="cityOfWeather"><br>
+                            <span
+                            class="error-text"
+                            v-if="$v.city.$dirty && !$v.city.required"
+                            >City field is empty</span>
+                    </label>
                     <a class="app-link user-form__link" v-if="inputDisabled" @click.prevent="inputDisabled=false">Edit data</a>
                     <button class="app-button user-form__button" v-else @click.prevent="uploadData()">Save</button>
                     <div class="user-form__post-button">
@@ -63,82 +74,80 @@
                     </div>
                 </form>
                 </app-card>
-                <button class="app-button" @click="success()">Push Success</button>
+                <!-- <button class="app-button" @click="success()">Push Success</button>
                 <button class="app-button" @click="warning()">Push Warning</button>
                 <button class="app-button" @click="error()">Push Error</button>
-                <button class="app-button" @click="info()">Push Info</button>
+                <button class="app-button" @click="info()">Push Info</button> -->
             </div>
         </div>   
     </div>
 </template>
 <script>
+import './HomePage.scss'
+import {required, minLength} from 'vuelidate/lib/validators'
+import messages from '../../../utils/messages'
+//components
 import AppCard from '../../UI/app-card/AppCard.vue'
 import LoaderPage from '../loader-page/LoaderPage.vue'
-import {required, minLength} from 'vuelidate/lib/validators'
-import './HomePage.scss'
 import AddPostButton from '../../UI/add-post-button/AddPostButton.vue'
 import AppModal from '../../UI/app-modal/AppModal.vue'
 import PostForm from '../post-components/post-form/PostForm.vue'
 import AppPopup from '../../UI/app-popup/AppPopup.vue'
-import messages from '../../../utils/messages'
 export default {
-  components: { AppCard, LoaderPage, AddPostButton, AppModal, PostForm, AppPopup },
-  data: () => ({
-        // messages: [],
-        loader: true,
-        inputDisabled: true,
-        modalVisible: false,
-        copyInfo: null,
-        name: "",
-        city: "",
-        gender: ""
-    }),
+    components: { AppCard, LoaderPage, AddPostButton, AppModal, PostForm, AppPopup },
+    data: () => ({
+            loader: true,
+            inputDisabled: true,
+            modalVisible: false,
+            copyInfo: null,
+            name: "",
+            city: "",
+            cityOfWeather:"",
+            dateOfBirth:"",
+            gender: ""
+        }),
     validations:{
         name:{required},
         city:{required},
         gender:{required}
     },
     async mounted() {
-        if (!Object.keys(this.$store.getters.info).length) {
-            await this.$store.dispatch('fetchInfo')
-        }
-        console.log(this.getInfo)
-        console.log(this.copyInfo)
-        this.copyInfo = Object.assign({}, this.getInfo);
-        console.log(this.copyInfo)
+        await this.getInfo()
         this.loader = false
-        console.log(this.name)
-        this.copyInfo1()
     }, 
     computed:{
-        getInfo(){
-            return this.$store.getters.info
-        },
+        // getInfo(){
+        //     return this.$store.getters.info
+        // },
     },
     methods:{
-        success(){
-            this.$popupSuccess('Woooooow')
-        },
-        warning(){
-            this.$popupWarning('Woooooow')
-        },
-        error(){
-            this.$popupError('Woooooow')
-        },
-        info(){
-            this.$popupInfo('Woooooow')
-        },
-        modalOpen(){
-            this.modalVisible = true
-            
-        },
-        copyInfo1(){
+        // success(){
+        //     this.$popupSuccess('Woooooow')
+        // },
+        // warning(){
+        //     this.$popupWarning('Woooooow')
+        // },
+        // error(){
+        //     this.$popupError('Woooooow')
+        // },
+        // info(){
+        //     this.$popupInfo('Woooooow')
+        // },
+        async getInfo(){
+            if (!Object.keys(this.$store.getters.info).length) {
+                this.copyInfo = await this.$store.dispatch('fetchInfo')
+            } else {
+                this.copyInfo = this.$store.getters.info
+            }
+            console.log(this.copyInfo)
             this.name = this.copyInfo.name
             this.city = this.copyInfo.city
             this.gender = this.copyInfo.gender
-            console.log(this.name)
-            console.log(this.city)
-            console.log(this.gender)
+            this.cityOfWeather = this.copyInfo.cityOfWeather
+            this.dateOfBirth = this.copyInfo.dateOfBirth
+        },
+        modalOpen(){
+            this.modalVisible = true
         },
         async uploadData(){
             if(this.$v.$invalid){
@@ -147,9 +156,11 @@ export default {
             }
             const formData = {
                 name: this.name,
-                dateOfBirth: this.copyInfo.dateOfBirth,
+                dateOfBirth: this.dateOfBirth,
                 city: this.city,
-                gender: this.gender
+                gender: this.gender,
+                cityOfWeather: this.cityOfWeather,
+
             }
             console.log(this.copyInfo)
             this.inputDisabled = true

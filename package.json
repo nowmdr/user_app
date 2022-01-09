@@ -16,6 +16,7 @@
     "core-js": "^3.6.5",
     "firebase": "^9.6.1",
     "jquery": "^1.9.1",
+    "lodash": "^4.17.21",
     "materialize-css": "^1.0.0-rc.2",
     "vue": "^2.6.11",
     "vue-my-toasts": "^2.0.1",

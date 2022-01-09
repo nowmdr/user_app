@@ -37,6 +37,13 @@ $shadow-red-attention: 0px 10px 40px 0px rgba(255, 62, 62, 0.3);
         @media (max-width:320px){@content;}
     }
 }
+@mixin text-crop($value){
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $value;
+}
+//fonts
 %font-size-regular{
     font-size: $main-regular;
     @include breakpoint(sm){
@@ -64,6 +71,7 @@ $shadow-red-attention: 0px 10px 40px 0px rgba(255, 62, 62, 0.3);
         font-size: $main-small-mob;
     }
 }
+
 %container{
     padding-left: 1%;
     padding-right: 1%;
@@ -73,6 +81,7 @@ $shadow-red-attention: 0px 10px 40px 0px rgba(255, 62, 62, 0.3);
         width: 100%;
     }
 }
+
 %app-button{
     border: none;
     border-radius: 20px;
@@ -81,6 +90,7 @@ $shadow-red-attention: 0px 10px 40px 0px rgba(255, 62, 62, 0.3);
     padding: 10px 15px;
 
     background-color: $main-light-blue;
+    box-shadow: $shadow-black;
     color: $main-light;
     font-weight: 700;
     @extend %font-size-regular;
@@ -88,6 +98,15 @@ $shadow-red-attention: 0px 10px 40px 0px rgba(255, 62, 62, 0.3);
     &:hover{
         background-color: $main-blue;
         transform: scale(1.02, 1.02);
+    }
+}
+%app-link{
+    color: $main-light-blue;
+    @extend %font-size-regular;
+    font-weight: 700;
+    cursor: pointer;
+    &:hover{
+        color: $main-blue;
     }
 }
 
@@ -146,13 +165,7 @@ $shadow-red-attention: 0px 10px 40px 0px rgba(255, 62, 62, 0.3);
     @extend %app-button
 }
 .app-link{
-    color: $main-light-blue;
-    @extend %font-size-regular;
-    font-weight: 700;
-    cursor: pointer;
-    &:hover{
-        color: $main-blue;
-    }
+    @extend %app-link
 }
 .app-toast-message{
     position: absolute;

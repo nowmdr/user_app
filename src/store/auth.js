@@ -14,7 +14,7 @@ export default{
              await firebase.auth().signOut()
              await commit('clearInfo')
          },
-         async register({dispatch, commit},{email, password, name, dateOfBirth,city, gender}){
+         async register({dispatch, commit},{email, password, name, dateOfBirth,city, gender, cityOfWeather}){
              try {
                  await firebase.auth().createUserWithEmailAndPassword(email, password)
                  const uid = await dispatch('getUid')
@@ -23,6 +23,7 @@ export default{
                     dateOfBirth,
                     name,
                     city,
+                    cityOfWeather,
                     gender
                  })
                  

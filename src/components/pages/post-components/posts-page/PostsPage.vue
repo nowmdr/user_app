@@ -5,57 +5,103 @@
             <app-modal :show.sync="modalVisible">
                 <post-form></post-form>
             </app-modal>
-            <h1 class="title">Welcome</h1>
+            <!-- <h1 class="title">Welcome</h1> -->
             <div class="posts-page__options">
-                <div><input v-model="sortByTitle" placeholder="Search by a title..." class="app-input" type="text"></div>
-                <span v-if="!searchedPosts || !searchedPosts.length">oops nothing to show</span>
+                <div>
+                    <input v-model="sortByTitle" @change="searchAllPosts()" placeholder="Search by a title..." class="app-input" type="text">
+                    <span v-if="!paginationArray || !paginationArray.length">oops no results found</span>
+                </div>
                 <add-post-button @click="modalOpen()"></add-post-button>
             </div>
             <div class="posts-page__container">
-                    <app-card @click="postOpen(post)" class="posts-page__item post-card" v-for="post of searchedPosts" :key="post.id">
-                        <h3 class="post-card__title">{{post.title}}</h3>
-                        <p class="post-card__body" v-html="post.body"></p>
-                        <!-- <delete-button @click="deletePost(post)"></delete-button> -->
-                    </app-card>
+                <ul class="posts-page__list">
+                    <li v-for="post of paginationArray" :key="post.id" class="posts-page__item">
+                        <post-card 
+                        @delete="deletePost(post)"
+                        @open="postOpen(post)" 
+                        :post="post" ></post-card>
+                    </li>
+                </ul>
+                <!-- <button @click="date()">Date</button> -->
             </div>
-        
+            <div v-if="!sortByTitle" class="post-page__pagination pagination">
+                <div v-for="pageNumber in totalPages"
+                :key="pageNumber"
+                class="pagination__page"
+                @click="changePage(pageNumber)"
+                :class="{'current-page': page === pageNumber}">{{pageNumber}}</div>
+            </div>
         </div> 
     </div>
-    
 </template>
 <script>
+import _ from 'lodash'
 import AddPostButton from '../../../UI/add-post-button/AddPostButton.vue'
 import AppCard from '../../../UI/app-card/AppCard.vue'
 import AppModal from '../../../UI/app-modal/AppModal.vue'
 import DeleteButton from '../../../UI/delete-buttion/DeleteButton.vue'
 import RefreshButton from '../../../UI/refresh-button/refreshButton.vue'
 import LoaderPage from '../../loader-page/LoaderPage.vue'
+import PostCard from '../post-card/PostCard.vue'
 import PostForm from '../post-form/PostForm.vue'
 import './PostsPage.scss'
 export default {
-    components: { AppCard, DeleteButton, AddPostButton, RefreshButton, AppModal, PostForm, LoaderPage  },
+    components: { AppCard, DeleteButton, AddPostButton, RefreshButton, AppModal, PostForm, LoaderPage, PostCard  },
     computed:{
         getPosts(){
             return this.$store.getters.posts
         }
     },
     data:() => ({
+        url: '',
         copyPosts: null,
         searchedPosts: null,
         filterCopyPosts: '',
+        paginationArray:null,
         modalVisible: false,
         sortByTitle:'',
+        page: 1,
+        limit: 6,
+        totalPages: 0,
         loader: true
     }),
-    async mounted(){
-        await this.fetchPosts()
-        console.log(this.copyPosts)
+    mounted(){
+        this.fetchPosts()
+        console.log(this.searchedPosts)
+        
         this.loader = false
+       
     },
     methods:{
+        setupPagination(posts){
+            const tempArray = _.chunk(posts, this.limit)
+            // this.totalPages = Math.ceil(this.searchedPosts.length / this.limit)
+            this.totalPages = _.size(tempArray)
+            this.paginationArray = tempArray[this.page -1] || tempArray[0]
+            console.log(this.paginationArray)
+        },
+        changePage(pageNumber){
+            this.page = pageNumber
+        },
+        // date(){
+        //     const date = new Date().getMonth
+        //     console.log(date)
+        //     console.log(typeof(date))
+        //     return date
+        // },
         async fetchPosts(){
+            if(this.$route.query.page){
+                this.page = +this.$route.query.page 
+            } 
             this.copyPosts = await this.$store.dispatch('getPosts')
-            this.searchedPosts = this.copyPosts
+            this.searchedPosts = await this.$store.dispatch('fetchNativePosts')
+            // this.searchedPosts = this.copyPosts
+            if (this.copyPosts){
+                this.searchedPosts = this.copyPosts.concat(this.searchedPosts)
+            }
+            this.$store.commit('setPosts', this.searchedPosts)
+            console.log(this.searchedPosts)
+            this.setupPagination(this.searchedPosts)
         },
         async deletePost(post){
             console.log(post)
@@ -63,19 +109,46 @@ export default {
             // console.log(this.copyPosts)
             // await this.$store.dispatch('updatePosts', this.copyPosts)
             await this.$store.dispatch('deletePost', post.id)
-            this.copyPosts = await this.$store.dispatch('getPosts')
+            // this.copyPosts = await this.$store.dispatch('getPosts')
+            this.fetchPosts()
         },
         modalOpen(){
             this.modalVisible = true
         },
         postOpen(post){
+            // console.log(post)
             this.$router.push(`/posts/${post.id}`)
+            
+        },
+        searchAllPosts(){
+            if (this.searchedPosts){
+                const arr = this.searchedPosts.filter((post)=>{
+                    return post.title.toLowerCase().match(this.sortByTitle) || post.body.toLowerCase().match(this.sortByTitle)
+                })
+                if(arr.lenght == 0){
+                    this.setupPagination(this.searchedPosts)
+                } else {
+                    this.paginationArray = arr
+                }
+            }
+        }
+       
+    },
+    computed:{
+        serch: function(){
+            
         }
     },
     watch:{
-        sortByTitle: function(){
-            this.searchedPosts = this.copyPosts.filter(post => post.title.toLowerCase().includes(this.sortByTitle.toLowerCase()))
-            console.log(this.searchedPosts)
+        // sortByTitle: function(){
+        //     this.searchedPosts = this.copyPosts.filter(post => post.title.toLowerCase().includes(this.sortByTitle.toLowerCase()))
+        //     console.log(this.searchedPosts)
+        // },
+        page: function(){
+            if(this.page){
+                this.setupPagination(this.searchedPosts)
+                this.$router.push(`${this.$route.path}?page=${this.page}`).catch(()=>{});
+            }
         },
         modalVisible: async function(){
            if (!this.modalVisible) {

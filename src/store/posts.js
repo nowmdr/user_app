@@ -1,4 +1,5 @@
 import firebase from 'firebase/compat/app'
+import axios from 'axios'
 export default{
     state:{
         posts:{}
@@ -12,6 +13,15 @@ export default{
         }
     },
     actions: {
+        async fetchNativePosts(){
+            try {
+                const response = (await axios.get(`https://jsonplaceholder.typicode.com/posts?_limit=10`)).data
+                console.log(response)
+                return response
+            } catch (error) {
+                this.$popupError(error)
+            }
+        },
         async getPosts({dispatch, commit}){
             try {
                 const uid = await dispatch('getUid')
@@ -22,15 +32,19 @@ export default{
                 commit('setError', e)
             }  
         },
-        async addPost({dispatch, commit},{title, body}){
+        async addPost({dispatch, commit},{title, subtitle, body ,date, imageUrl}){
             try {
                 const uid = await dispatch('getUid')
+                console.log(title + subtitle + body + date + imageUrl)
                 const post = await firebase.database().ref(`/users/${uid}/posts`).push({
+                    imageUrl,
+                    date,
                     title,
+                    subtitle,
                     body
                  })
                  return{
-                     title,body, id: post.key
+                     title,body, id: post.key,date, imageUrl
                  }
                 // const info = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val()
                 // commit('setInfo', info)
@@ -51,7 +65,7 @@ export default{
                 commit('setError', e)
             }  
         },
-        async deletePost({dispatch, commit},{id}){
+        async deletePost({dispatch, commit},id){
             try {
                 const uid = await dispatch('getUid')
                 await firebase.database().ref(`/users/${uid}/posts/${id}`).remove()

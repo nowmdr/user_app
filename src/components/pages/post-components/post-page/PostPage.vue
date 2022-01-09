@@ -2,9 +2,28 @@
     <div>
         <loader-page v-if="loader"></loader-page>
         <div class="post" v-else>
+            
             <div class="post__container" v-if="post">
-                <h1 class="post__title">{{post.title}}</h1>
-                <p v-html="post.body" class="post__body"></p>
+                <div class="post__card">
+                    <div class="post__header">
+                        <div class="post__img">
+                            <img v-if="post.imageUrl" :src="`${post.imageUrl}`" alt="cover">
+                            <img v-else src="https://cdn.liveagent.com/app/uploads/2021/06/sigmund-59yRYIHWtzY-unsplash.jpg" alt="cover">
+                        </div>
+                        <div class="post__info">
+                            <div class="post__date">
+                                <ion-icon name="calendar-outline"></ion-icon>
+                                <span>12 jan 2022</span> 
+                            </div>
+                            <h3 class="post__title">{{post.title}}</h3>
+                            <span class="post__subtitle">{{post.subtitle}}</span>
+                        </div>
+                    </div>
+                    <div class="post__body">
+                        <p v-html="post.body" class="post__text"></p>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>
@@ -17,20 +36,29 @@ export default {
     data:() => ({
         id: '',
         post: null,
-        loader: true
+        loader: true,
+        index: ''
     }),
     mounted(){
-        this.id = this.$route.params.id
-        this.post = this.getPosts[this.id]
-        console.log(this.getPosts)
-        console.log(this.id)
-        console.log(this.post)
+        
+        // this.index = this.getPosts.findIndex((element,index) => {
+        //     if(element.id = this.id){
+        //         return index
+        //     }
+        // })
+        // this.post = this.getPosts[this.index]
+        this.filterPosts()
         this.loader = false
-
     },
     computed:{
         getPosts(){
             return this.$store.getters.posts
+        }
+    },
+    methods:{
+        filterPosts(){
+            this.id = this.$route.params.id
+            this.post = (this.getPosts.filter(post => post.id == this.id))[0]
         }
     }
 }

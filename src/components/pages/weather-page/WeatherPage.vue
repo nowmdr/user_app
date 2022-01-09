@@ -56,7 +56,7 @@ export default {
     }),
     computed:{
         getCity(){
-            return this.$store.getters.info.city
+            return this.$store.getters.info.cityOfWeather
         }
     },
     methods:{
@@ -66,11 +66,8 @@ export default {
         async fetchWeather(){
             try {
                 const key = process.env.VUE_APP_WEATHER
-                const response = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${this.city ? this.city : this.getCity}&appid=${key}`)
-                const data = response.data 
-                console.log(this.getCity)
+                const data = (await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${this.city ? this.city : this.getCity}&appid=${key}`)).data
                 this.city =''
-                console.log(data)
                 this.weather.cityName = data.name;
                 this.weather.country = data.sys.country;
                 this.weather.temperature = this.kelvinToCelsius(data.main.temp).toFixed(0);
@@ -80,17 +77,16 @@ export default {
                 // this.weather.feelsLike = Math.round(data.main.feels_like);
                 // this.weather.humidity = Math.round(data.main.humidity);
                 // const timeOfDay = data.weather[0].icon;
-
                 this.cityFound = false;
             } catch (e) {
-                // console.log(e)
+                console.log(e.message)
                 this.cityFound = true;
-                this.$popupError('City not found')
+                this.$popupError(messages[e.message])
             }
         }
     },
-     async mounted(){
-        await this.fetchWeather()
+    mounted(){
+        this.fetchWeather()
         this.loader = false
     },
 }

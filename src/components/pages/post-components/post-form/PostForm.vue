@@ -14,13 +14,23 @@
             class="app-input post-form__input" 
             placeholder="Post title"
             type="text">
-            <span v-if="$v.title.$dirty && !$v.title.reqiured">Title field is required</span>
+            <input 
+            v-model="subtitle"
+            class="app-input post-form__input" 
+            placeholder="Subtitle - is not required"
+            type="text">
             <textarea 
             v-model="body"
             class="app-input post-form__text" 
             placeholder="Type your post here, you can use HTML tags also"
             ></textarea>
+            <input 
+            v-model="imageUrl"
+            class="app-input post-form__input" 
+            placeholder="Paste image URL here"
+            type="text">
             <button @click.prevent="createPost()" class="app-button post-form__send-button">Create new post</button>
+            <!-- <img v-bind:src="`${imageUrl}`" alt="url"> -->
         </form>
     </app-card>
 </template>
@@ -32,7 +42,10 @@ import AddPostButton from '../../../UI/add-post-button/AddPostButton.vue'
 export default {
     components: { AppCard, AddPostButton },
     data:() => ({
+        imageUrl: '', 
+        date: '',
         title: '',
+        subtitle: '',
         body: '',
         success: false,
     }),
@@ -40,19 +53,31 @@ export default {
         title:{required, minLength},
         body:{required, minLength }
     },
+    watch:{
+         imageUrl(){
+             console.log(this.imageUrl)
+         }
+    },
     methods:{
         async createPost(){
             if (this.$v.$invalid) {
                 this.$v.$touch()
                 return 
             }
+            console.log(this.imageUrl)
             try {
+                this.date = new Date()
+                    console.log(this.imageUrl)
                 const post = await this.$store.dispatch('addPost',{
+                    date:  this.date,
                     title: this.title,
-                    body: this.body
+                    subtitle: this.subtitle,
+                    body: this.body,
+                    imageUrl: this.imageUrl
                 })
                 console.log(post)
                 this.$v.$reset()
+                this.subtitle =''
                 this.title = ''
                 this.body = ''
                 this.success = true

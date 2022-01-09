@@ -2,7 +2,8 @@
     <div>
         <loader-page v-if="loader"></loader-page>
         <div v-else class="exchange">
-        <h3 class="title">Exchange on<br>{{ currency.date | date('date')}}</h3>
+            <!-- {{ date | date('date')} -->
+        <h3 class="title">Exchange on<br>{{ currency.date | date('date') }}</h3>
             <div class="exchange__container">
                 <app-card class="exchange__card">EUR: 
                     <input
@@ -86,26 +87,26 @@ export default {
         calcEur:false,
         calcUsd:false,
         calcRub:false,
-        eur: 100,
-        pln: '',
-        usd: '',
-        rub: ''
+        eur: 1,
+        pln: '4.59',
+        usd: '1.14',
+        rub: '84.51'
     }),
     async mounted(){
-        await this.$store.dispatch('getCurrency')
-        this.currency = this.getCurrency
+        await this.getCurrency()
+        // this.exchangeEur()
         this.loader = false
     },
     methods:{
+        async getCurrency(){
+            this.currency = await this.$store.dispatch('getCurrency')
+        },
         async refresh(){
-            await this.$store.dispatch('fetchCurrency')
-            this.currency = this.getCurrency
-            console.log(this.currency)
+            this.currency = await this.$store.dispatch('fetchCurrency')
             if (!this.currency.success) {
-              this.$error(this.currency.error.info)
+                this.$popupError(this.currency.error.info)
             } else {
-                // this.exchangeEur()
-                this.$message(messages['succes_exchange'])
+                this.$popupSuccess(messages['succes_exchange'])
             }
         },
         clearInput(name){
@@ -149,7 +150,6 @@ export default {
             for(let i = 0; i < this.eur.length; i++){
                 if (this.eur.charAt(i) == "+" || "-" || "*" || "/") {
                     this.calc = eval(this.eur).toFixed(2)
-                    console.log(this.calc)
                     this.pln = (this.calc * this.currency.rates.PLN).toFixed(2)
                     this.usd = (this.calc * this.currency.rates.USD).toFixed(2)
                     this.rub = (this.calc * this.currency.rates.RUB).toFixed(2)
@@ -162,7 +162,6 @@ export default {
                 console.log(this.pln.charAt(i));
                 if (this.pln.charAt(i) == "+" || "-" || "*" || "/") {
                     this.calc = eval(this.pln).toFixed(2)
-                    console.log(this.calc)
                     this.eur = +(this.calc / this.currency.rates.PLN).toFixed(2)
                     this.usd = +(this.eur * this.currency.rates.USD).toFixed(2)
                     this.rub = +(this.eur * this.currency.rates.RUB).toFixed(2)
@@ -193,17 +192,14 @@ export default {
         }
     },
     computed:{
-        getCurrency(){
-            return this.$store.getters.currency
-        },
         error(){
             return this.$store.getters.error
         },
     },
     watch:{
-        error(){
-            console.log(this.error)
-            this.$error(this.error) 
+        error(fbError){
+            console.log(fbError.code)
+            this.$popupError('Something wrong, try again') 
         },
         eur: function(){
             if (this.watchLock == 'eur') {
@@ -212,6 +208,7 @@ export default {
                     this.calcEur = true
                     this.calcUsd = false
                     this.calcRub = false
+                    
                     this.exchangeEur()
                     if (this.eur == '') {
                         this.calcEur = false
