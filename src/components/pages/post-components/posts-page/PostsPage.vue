@@ -9,7 +9,7 @@
             <div class="posts-page__options">
                 <div>
                     <input v-model="sortByTitle" @change="searchAllPosts()" placeholder="Search by a title..." class="app-input" type="text">
-                    <span v-if="!paginationArray || !paginationArray.length">oops no results found</span>
+                    <!-- <span v-if="!paginationArray || !paginationArray.length">oops no results found</span> -->
                 </div>
                 <add-post-button @click="modalOpen()"></add-post-button>
             </div>
@@ -125,7 +125,8 @@ export default {
                 const arr = this.searchedPosts.filter((post)=>{
                     return post.title.toLowerCase().match(this.sortByTitle) || post.body.toLowerCase().match(this.sortByTitle)
                 })
-                if(arr.lenght == 0){
+                if(arr.length < 1){
+                    this.$popupWarning('No result')
                     this.setupPagination(this.searchedPosts)
                 } else {
                     this.paginationArray = arr

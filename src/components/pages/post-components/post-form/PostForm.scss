@@ -1,10 +1,32 @@
 @import '../../../../theme/variables.scss';
 .post{
     &-form{
-        width: 100%;
+        width: 500px;
+        display: flex;
+        flex-direction: column;
+        @include breakpoint(lg){   
+
+        }
+        @include breakpoint(md){
+           
+        }
+        @include breakpoint(sm){
+            width: 100%;
+        }
+        @include breakpoint(xs){
+            
+        }
         &__input{
             width: 100%;
             margin-bottom: 20px;
+        }
+        .validation-text{
+            span{
+                display: flex;
+                margin-left: 10px;
+                margin-bottom: 10px;
+            }
+           
         }
         &__text{
             width: 100%;

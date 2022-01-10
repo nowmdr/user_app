@@ -1,7 +1,7 @@
 @import '../../../theme/variables.scss';
 .app-card{
     display: flex;
-    min-width: 300px;
+    min-width: 310px;
     max-width: 95%;
     border-radius: 20px;
     padding: 20px;
@@ -14,7 +14,8 @@
 
     }
     @include breakpoint(sm){
-
+        width: 100%;
+        // max-width: 100%;
     }
     @include breakpoint(xs){
 

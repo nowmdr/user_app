@@ -6,10 +6,23 @@
         justify-content: space-between;
         margin: 30px 0;
         // @extend %container
-        & span{
-            color:$main-light-red;
-            margin-left: 20px;
+        @include breakpoint(sm){
+            flex-direction: column;
+            & div{
+                width: 100%;
+                & input{
+                    width: 100%;
+                    margin-bottom: 15px;
+                }
+            }
         }
+        @include breakpoint(xs){
+            
+        }
+        // & span{
+        //     color:$main-light-red;
+        //     margin-left: 20px;
+        // }
     }
     &__container{
         // display: flex;
@@ -21,21 +34,35 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        // width: 100%;
     }
     &__item{
         margin-bottom: 30px;
+        width: 30%;
+        @include breakpoint(lg){   
+            width: 48%;
+        }
+        @include breakpoint(md){
+            width: 100%;
+        }
+        @include breakpoint(sm){
+    
+        }
+        @include breakpoint(xs){
+            
+        }
     }
     @extend %container
 }
 
 .post-item {
-    display: inline-block;
-    margin-right: 10px;
+    // display: inline-block;
+    // margin-right: 10px;
   }
 .pagination{
     width: 20%;
     display: flex;
-    margin: 0 auto;
+    margin: 20px auto;
     justify-content: space-around;
     &__page{
         padding: 5px;

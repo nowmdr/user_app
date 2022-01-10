@@ -80,6 +80,16 @@ $shadow-red-attention: 0px 10px 40px 0px rgba(255, 62, 62, 0.3);
     @include breakpoint(lg){
         width: 100%;
     }
+    @include breakpoint(md){
+    
+    }
+    @include breakpoint(sm){
+        padding-left: 2%;
+        padding-right: 2%;
+    }
+    @include breakpoint(xs){
+        
+    }
 }
 
 %app-button{
