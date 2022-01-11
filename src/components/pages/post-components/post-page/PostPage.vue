@@ -6,11 +6,15 @@
             <div class="post__container" v-if="post">
                 <div class="post__card">
                     <div class="post__header">
-                        <div class="post__img">
+
+                        <!-- <div class="post__img">
                             <img v-if="post.imageUrl" :src="`${post.imageUrl}`" alt="cover">
                             <img v-else src="https://cdn.liveagent.com/app/uploads/2021/06/sigmund-59yRYIHWtzY-unsplash.jpg" alt="cover">
-                        </div>
-                        <div class="post__info">
+                        </div> -->
+                        <div class="post__info" :style="{
+                            backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+                                                url(${backgroundUrl})`
+                        }">
                             <div class="post__date">
                                 <ion-icon name="calendar-outline"></ion-icon>
                                 <span>12 jan 2022</span> 
@@ -37,7 +41,8 @@ export default {
         id: '',
         post: null,
         loader: true,
-        index: ''
+        index: '',
+        backgroundUrl: ''
     }),
     mounted(){
         
@@ -59,6 +64,11 @@ export default {
         filterPosts(){
             this.id = this.$route.params.id
             this.post = (this.getPosts.filter(post => post.id == this.id))[0]
+            if(!this.post.imageUrl){
+                this.backgroundUrl = 'https://cdn.liveagent.com/app/uploads/2021/06/sigmund-59yRYIHWtzY-unsplash.jpg'
+            } else {
+                this.backgroundUrl = this.post.imageUrl
+            }
         }
     }
 }

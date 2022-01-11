@@ -94,7 +94,6 @@ export default {
     }),
     async mounted(){
         await this.getCurrency()
-        // this.exchangeEur()
         this.loader = false
     },
     methods:{
@@ -199,7 +198,7 @@ export default {
     watch:{
         error(fbError){
             console.log(fbError.code)
-            this.$popupError('Something wrong, try again') 
+            this.$popupError(fbError.code ||'Something wrong, try again') 
         },
         eur: function(){
             if (this.watchLock == 'eur') {

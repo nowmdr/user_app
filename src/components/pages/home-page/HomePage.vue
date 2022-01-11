@@ -11,6 +11,10 @@
             <div class="user">
                 <app-card>
                     <form class="user-form">
+                    <div class="user-form__photo">
+                        <img v-if="photoUrl" :src="`${photoUrl}`" alt="user-photo">
+                        <img v-else src="https://preserveyourestate.net/wp-content/uploads/2018/08/Non-profile.jpg" alt="user-photo">
+                    </div>
                     <label class="user-form__input">Name:
                         <input 
                         type="text"
@@ -67,6 +71,18 @@
                             v-if="$v.city.$dirty && !$v.city.required"
                             >City field is empty</span>
                     </label>
+                    <label v-if="!inputDisabled" class="user-form__input">Photo URL: 
+                        <input 
+                            type="text"
+                            :disabled="inputDisabled"
+                            placeholder="Paste here your photo URL"
+                            :class="{invalid: ($v.photoUrl.$dirty && !$v.photoUrl.url)}"
+                            v-model="photoUrl"><br>
+                            <span
+                            class="error-text"
+                            v-if="$v.photoUrl.$dirty && !$v.photoUrl.url"
+                            >sorry it is not url</span>
+                    </label>
                     <a class="app-link user-form__link" v-if="inputDisabled" @click.prevent="inputDisabled=false">Edit data</a>
                     <button class="app-button user-form__button" v-else @click.prevent="uploadData()">Save</button>
                     <div class="user-form__post-button">
@@ -84,8 +100,7 @@
 </template>
 <script>
 import './HomePage.scss'
-import {required, minLength} from 'vuelidate/lib/validators'
-import messages from '../../../utils/messages'
+import {required, minLength, url} from 'vuelidate/lib/validators'
 //components
 import AppCard from '../../UI/app-card/AppCard.vue'
 import LoaderPage from '../loader-page/LoaderPage.vue'
@@ -104,12 +119,14 @@ export default {
             city: "",
             cityOfWeather:"",
             dateOfBirth:"",
-            gender: ""
+            gender: "",
+            photoUrl:""
         }),
     validations:{
         name:{required},
         city:{required},
-        gender:{required}
+        gender:{required},
+        photoUrl:{url}
     },
     async mounted() {
         await this.getInfo()
@@ -145,6 +162,7 @@ export default {
             this.gender = this.copyInfo.gender
             this.cityOfWeather = this.copyInfo.cityOfWeather
             this.dateOfBirth = this.copyInfo.dateOfBirth
+            this.photoUrl = this.copyInfo.photoUrl
         },
         modalOpen(){
             this.modalVisible = true
@@ -160,6 +178,7 @@ export default {
                 city: this.city,
                 gender: this.gender,
                 cityOfWeather: this.cityOfWeather,
+                photoUrl: this.photoUrl
 
             }
             console.log(this.copyInfo)

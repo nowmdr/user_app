@@ -25,6 +25,7 @@ $shadow-black:0 7px 25px rgba(0, 0, 0, 0.08);
 $shadow-blue-attention: 0px 10px 40px 0px rgba(176, 201, 253, 0.3);
 $shadow-red-attention: 0px 10px 40px 0px rgba(255, 62, 62, 0.3);
 
+$post-img: url('{{post.imageUrl}}');
 //mixins
 @mixin breakpoint($point){
     @if $point == lg{

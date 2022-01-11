@@ -8,12 +8,11 @@
             <!-- <h1 class="title">Welcome</h1> -->
             <div class="posts-page__options">
                 <div>
-                    <input v-model="sortByTitle" @change="searchAllPosts()" placeholder="Search by a title..." class="app-input" type="text">
-                    <!-- <span v-if="!paginationArray || !paginationArray.length">oops no results found</span> -->
+                    <input v-model="sortByTitle" @input="searchAllPosts()" placeholder="Search by a title..." class="app-input" type="text">
                 </div>
                 <add-post-button @click="modalOpen()"></add-post-button>
             </div>
-            <div class="posts-page__container">
+            <div v-if="searchResult" class="posts-page__container">
                 <ul class="posts-page__list">
                     <li v-for="post of paginationArray" :key="post.id" class="posts-page__item">
                         <post-card 
@@ -23,6 +22,10 @@
                     </li>
                 </ul>
                 <!-- <button @click="date()">Date</button> -->
+            </div>
+            <div v-else class="posts-page__no-result">
+                <span>It seems there is no such post</span>
+                <img src="https://unsplash.com/a/img/empty-states/photos.png" alt="No result">
             </div>
             <div v-if="!sortByTitle" class="post-page__pagination pagination">
                 <div v-for="pageNumber in totalPages"
@@ -53,6 +56,7 @@ export default {
         }
     },
     data:() => ({
+        searchResult: true,
         url: '',
         copyPosts: null,
         searchedPosts: null,
@@ -122,13 +126,17 @@ export default {
         },
         searchAllPosts(){
             if (this.searchedPosts){
+                const regular = new RegExp(`${this.sortByTitle}`,`gi`)
                 const arr = this.searchedPosts.filter((post)=>{
-                    return post.title.toLowerCase().match(this.sortByTitle) || post.body.toLowerCase().match(this.sortByTitle)
+                    // return post.title.toLowerCase().includes(this.sortByTitle) || post.body.toLowerCase().includes(this.sortByTitle)
+                    return post.title.match(regular) ||  post.body.match(regular)
                 })
                 if(arr.length < 1){
-                    this.$popupWarning('No result')
+                    // this.$popupWarning('No result')
                     this.setupPagination(this.searchedPosts)
+                    this.searchResult = false
                 } else {
+                    this.searchResult = true
                     this.paginationArray = arr
                 }
             }

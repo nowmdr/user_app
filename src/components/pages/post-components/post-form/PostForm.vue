@@ -23,7 +23,7 @@
                 >Title dont be less than 10 symbols, now {{title.length}} </span>
                 <span class="error-text"
                 v-if="$v.title.$dirty && !$v.title.maxLength"
-                >Maximum title size is 15 symbols, now {{title.length}} </span>
+                >Maximum title size is 100 symbols, now {{title.length}} </span>
             </div>
             <input 
             v-model="subtitle"
@@ -88,8 +88,8 @@ export default {
         success: false,
     }),
     validations:{
-        title:{required, minLength: minLength(10), maxLength: maxLength(15)},
-        subtitle:{required, minLength: minLength(2), maxLength: maxLength(10)},
+        title:{required, minLength: minLength(10), maxLength: maxLength(100)},
+        subtitle:{required, minLength: minLength(2), maxLength: maxLength(20)},
         body:{required, minLength: minLength(10) },
         imageUrl:{url}
     },

@@ -22,7 +22,7 @@ export default{
                 commit('setError', e)
             }  
         },
-        async updateInfo({dispatch, commit},{name, dateOfBirth,city,gender,cityOfWeather}){
+        async updateInfo({dispatch, commit},{name, dateOfBirth,city,gender,cityOfWeather,photoUrl}){
             try {
                 const uid = await dispatch('getUid')
                 await firebase.database().ref(`/users/${uid}/info`).set({
@@ -30,7 +30,8 @@ export default{
                     name,
                     city,
                     gender,
-                    cityOfWeather
+                    cityOfWeather,
+                    photoUrl
                  })
                 // const info = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val()
                 commit('setInfo', info)

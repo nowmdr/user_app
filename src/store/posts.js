@@ -19,7 +19,7 @@ export default{
                 console.log(response)
                 return response
             } catch (error) {
-                this.$popupError(error)
+                commit('setError', e)
             }
         },
         async getPosts({dispatch, commit}){
