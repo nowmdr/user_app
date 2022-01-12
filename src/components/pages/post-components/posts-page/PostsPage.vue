@@ -142,20 +142,23 @@ export default {
       this.$router.push(`/posts/${post.id}`);
     },
     searchAllPosts() {
-      if (this.searchedPosts) {
-        const regular = new RegExp(`${this.sortByTitle}`, `gi`);
-        const arr = this.searchedPosts.filter((post) => {
-          // return post.title.toLowerCase().includes(this.sortByTitle) || post.body.toLowerCase().includes(this.sortByTitle)
-          return post.title.match(regular) || post.body.match(regular);
-        });
-        if (arr.length < 1) {
-          // this.$popupWarning('No result')
-          this.setupPagination(this.searchedPosts);
-          this.searchResult = false;
-        } else {
-          this.searchResult = true;
-          this.paginationArray = arr;
+      if (this.sortByTitle) {
+        if (this.searchedPosts) {
+          const regular = new RegExp(`${this.sortByTitle}`, `gi`);
+          const arr = this.searchedPosts.filter((post) => {
+            // return post.title.toLowerCase().includes(this.sortByTitle) || post.body.toLowerCase().includes(this.sortByTitle)
+            return post.title.match(regular) || post.body.match(regular);
+          });
+          if (arr.length < 1) {
+            this.setupPagination(this.searchedPosts);
+            this.searchResult = false;
+          } else {
+            this.searchResult = true;
+            this.paginationArray = arr;
+          }
         }
+      } else {
+        this.setupPagination(this.searchedPosts);
       }
     },
   },

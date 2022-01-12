@@ -1,13 +1,12 @@
-@import '../../../theme/variables.scss';
-.register{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    &-form{
-        &__link{
-            margin-top: 15px;
-        }
+@import "../../../theme/variables.scss";
+.register {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &-form {
+    &__link {
+      margin-top: 15px;
     }
+  }
 }
-

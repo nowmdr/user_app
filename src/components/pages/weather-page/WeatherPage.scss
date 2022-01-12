@@ -1,15 +1,15 @@
-.weather{
+.weather {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  &__card {
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    &__card{
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
+  }
+  .card {
+    &__form {
+      margin-top: 20px;
     }
-    .card{
-        &__form{
-            margin-top: 20px;  
-        }
-    }
+  }
 }
