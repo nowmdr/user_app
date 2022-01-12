@@ -89,7 +89,7 @@
             invalid: $v.gender.$dirty && !$v.gender.required,
             'main-black': gender,
           }"
-          class="gender-select app-input"
+          class="input-select app-input"
           name="gender"
           v-model="gender"
         >

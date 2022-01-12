@@ -1,45 +1,48 @@
-@import '../../../theme/variables.scss';
-
-
+@import "../../../theme/variables.scss";
 @keyframes jump {
-	from, to, 60% { transform: translateY(0); }
-	30% { transform: translateY(-100%); }
+  from,
+  to,
+  60% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-100%);
+  }
 }
 .six {
-	position: relative;
-    height: 50vh;
-    width: 100%;
-    div {
-        position: absolute;
-        background: $main-blue;
-        border-radius: 100%;
-        height: 15px;
-        width: 15px;
-        top: 50%;
-        animation: jump 1s ease-in-out infinite;
-        &:nth-of-type(1) {
-            left: 50%;
-        }
-        &:nth-of-type(2) {
-            left: 55%;
-            animation-delay: .15s;
-            @include breakpoint(sm){
-                left: 60%;
-            }
-            @include breakpoint(xs){
-                left: 65%;
-            }
-        }
-        &:nth-of-type(3) {
-            left: 45%;
-            animation-delay: .3s;
-            @include breakpoint(sm){
-                left: 40%;
-            }
-            @include breakpoint(xs){
-                left: 35%;
-            }
-        }
+  position: relative;
+  height: 50vh;
+  width: 100%;
+  div {
+    position: absolute;
+    background: $main-blue;
+    border-radius: 100%;
+    height: 15px;
+    width: 15px;
+    top: 50%;
+    animation: jump 1s ease-in-out infinite;
+    &:nth-of-type(1) {
+      left: 50%;
     }
+    &:nth-of-type(2) {
+      left: 55%;
+      animation-delay: 0.15s;
+      @include breakpoint(sm) {
+        left: 60%;
+      }
+      @include breakpoint(xs) {
+        left: 65%;
+      }
+    }
+    &:nth-of-type(3) {
+      left: 45%;
+      animation-delay: 0.3s;
+      @include breakpoint(sm) {
+        left: 40%;
+      }
+      @include breakpoint(xs) {
+        left: 35%;
+      }
+    }
+  }
 }
- 

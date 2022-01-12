@@ -1,0 +1,6 @@
+@import "../../../theme/variables.scss";
+.app-select {
+  color: $main-black;
+  cursor: pointer;
+  @extend %app-input;
+}

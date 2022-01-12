@@ -1,236 +1,249 @@
 // colors
-$main-background-white: #F6F6F6;
+$main-background-white: #f6f6f6;
 $main-white: #fff;
 $main-gray: #999;
-$main-blue: #0555FF;
+$main-blue: #0555ff;
 $main-light-blue: #7dc0ff;
 $main-light-red: rgb(255, 62, 62, 0.7);
 $main-light: #f5f5f5;
 $main-black: #141414;
-$main-success: #00A676;
-$main-warning: #EEC643;
-$main-error: #FF2E00;
-
-
+$main-success: #00a676;
+$main-warning: #eec643;
+$main-error: #ff2e00;
 //font-size
 $main-title: 22px;
-$main-regular: 16px;  
+$main-regular: 16px;
 $main-small: 14px;
 //font-size mobile
 $main-title-mob: 20px;
-$main-regular-mob: 14px;  
+$main-regular-mob: 14px;
 $main-small-mob: 12px;
 //shadows
-$shadow-black:0 7px 25px rgba(0, 0, 0, 0.08);
+$shadow-black: 0 7px 25px rgba(0, 0, 0, 0.08);
 $shadow-blue-attention: 0px 10px 40px 0px rgba(176, 201, 253, 0.3);
 $shadow-red-attention: 0px 10px 40px 0px rgba(255, 62, 62, 0.3);
 
-$post-img: url('{{post.imageUrl}}');
+$post-img: url("{{post.imageUrl}}");
 //mixins
-@mixin breakpoint($point){
-    @if $point == lg{
-        @media (max-width:992px){@content;}
-    } @else if $point == md {
-        @media (max-width:768px){@content;}
-    } @else if $point == sm {
-        @media (max-width:576px){@content;}
-    } @else if $point == xs {
-        @media (max-width:320px){@content;}
+@mixin breakpoint($point) {
+  @if $point == lg {
+    @media (max-width: 992px) {
+      @content;
     }
+  } @else if $point == md {
+    @media (max-width: 768px) {
+      @content;
+    }
+  } @else if $point == sm {
+    @media (max-width: 576px) {
+      @content;
+    }
+  } @else if $point == xs {
+    @media (max-width: 320px) {
+      @content;
+    }
+  }
 }
-@mixin text-crop($value){
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: $value;
+@mixin text-crop($value) {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $value;
 }
 //fonts
-%font-size-regular{
-    font-size: $main-regular;
-    @include breakpoint(sm){
-        font-size: $main-regular-mob;
-    }
-    @include breakpoint(xs){
-        font-size: $main-regular-mob;
-    }
+%font-size-regular {
+  font-size: $main-regular;
+  @include breakpoint(sm) {
+    font-size: $main-regular-mob;
+  }
+  @include breakpoint(xs) {
+    font-size: $main-regular-mob;
+  }
 }
-%font-size-title{
-    font-size: $main-title;
-    @include breakpoint(sm){
-        font-size: $main-title-mob;
-    }
-    @include breakpoint(xs){
-        font-size: $main-title-mob;
-    }
+%font-size-title {
+  font-size: $main-title;
+  @include breakpoint(sm) {
+    font-size: $main-title-mob;
+  }
+  @include breakpoint(xs) {
+    font-size: $main-title-mob;
+  }
 }
-%font-size-small{
-    font-size: $main-small;
-    @include breakpoint(sm){
-        font-size: $main-small-mob;
-    }
-    @include breakpoint(xs){
-        font-size: $main-small-mob;
-    }
+%font-size-small {
+  font-size: $main-small;
+  @include breakpoint(sm) {
+    font-size: $main-small-mob;
+  }
+  @include breakpoint(xs) {
+    font-size: $main-small-mob;
+  }
 }
 
-%container{
+%container {
+  padding-left: 2%;
+  padding-right: 2%;
+  width: 992px;
+  margin: 0 auto;
+  @include breakpoint(lg) {
+    width: 100%;
+  }
+  @include breakpoint(md) {
+  }
+  @include breakpoint(sm) {
     padding-left: 2%;
     padding-right: 2%;
-    width: 992px;
-    margin: 0 auto;
-    @include breakpoint(lg){
-        width: 100%;
-    }
-    @include breakpoint(md){
-    
-    }
-    @include breakpoint(sm){
-        padding-left: 2%;
-        padding-right: 2%;
-    }
-    @include breakpoint(xs){
-        
-    }
+  }
+  @include breakpoint(xs) {
+  }
 }
 
-%app-button{
-    border: none;
-    border-radius: 20px;
+%app-button {
+  border: none;
+  border-radius: 20px;
 
-    min-width: 80px;
-    padding: 10px 15px;
+  min-width: 80px;
+  padding: 10px 15px;
 
-    background-color: $main-light-blue;
-    box-shadow: $shadow-black;
-    color: $main-light;
-    font-weight: 700;
-    @extend %font-size-regular;
-    cursor: pointer;
-    &:hover{
-        background-color: $main-blue;
-        transform: scale(1.02, 1.02);
-    }
+  background-color: $main-light-blue;
+  box-shadow: $shadow-black;
+  color: $main-light;
+  font-weight: 700;
+  @extend %font-size-regular;
+  cursor: pointer;
+  &:hover {
+    background-color: $main-blue;
+    transform: scale(1.02, 1.02);
+  }
 }
-%app-link{
-    color: $main-light-blue;
-    @extend %font-size-regular;
-    font-weight: 700;
-    cursor: pointer;
-    &:hover{
-        color: $main-blue;
-    }
+%app-link {
+  color: $main-light-blue;
+  @extend %font-size-regular;
+  font-weight: 700;
+  cursor: pointer;
+  &:hover {
+    color: $main-blue;
+  }
 }
-
+%app-input {
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  box-shadow: $shadow-black;
+  @extend %font-size-regular;
+  &::placeholder {
+    color: $main-gray;
+    font-size: inherit;
+  }
+  &:focus {
+    box-shadow: $shadow-blue-attention;
+    outline: none;
+  }
+}
 
 //styles
-.app-form{
+.app-form {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 400px;
+  padding: 20px;
+
+  border: none;
+  border-radius: 20px;
+  box-shadow: $shadow-black;
+  @include breakpoint(lg) {
+  }
+  @include breakpoint(md) {
+  }
+  @include breakpoint(sm) {
+    min-width: 300px;
+  }
+  @include breakpoint(xs) {
+  }
+  &__input {
     display: flex;
     flex-direction: column;
-
-    min-width: 400px;
-    padding: 20px;
-
-    border: none;
-    border-radius: 20px;
-    box-shadow: $shadow-black;
-    @include breakpoint(lg){
-
+    margin-bottom: 15px;
+    span {
+      margin-top: 10px;
+      margin-left: 15px;
+      @extend %font-size-small;
+      color: $main-light-red;
     }
-    @include breakpoint(md){
-
-    }
-    @include breakpoint(sm){
-        min-width: 300px;
-    }
-    @include breakpoint(xs){
-        
-    }
-    &__input{
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 15px;
-        span{
-            margin-top: 10px;
-            margin-left: 15px;
-            @extend %font-size-small;
-            color:$main-light-red;
-        }
-    }
+  }
 }
-.app-input{
-    border: none;
-    border-radius: 20px;
-    padding: 10px 20px;
-    box-shadow: $shadow-black;
-    @extend %font-size-regular;
-    &::placeholder{
-        color: $main-gray;
-        font-size: inherit;
-    }
-    &:focus{
-        box-shadow: $shadow-blue-attention;
-        outline: none;
-    }
+.app-input {
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  box-shadow: $shadow-black;
+  @extend %font-size-regular;
+  &::placeholder {
+    color: $main-gray;
+    font-size: inherit;
+  }
+  &:focus {
+    box-shadow: $shadow-blue-attention;
+    outline: none;
+  }
 }
-.app-button{
-    @extend %app-button
+.app-button {
+  @extend %app-button;
 }
-.app-link{
-    @extend %app-link
+.app-link {
+  @extend %app-link;
 }
-.app-toast-message{
-    position: absolute;
-    bottom: 10%;
-    right: 5%;
-    min-width: 15%;
-    text-align: center;
-    padding: 15px;
-    border: none;
-    border-radius: 20px;
-    box-shadow: $shadow-black;
+.app-toast-message {
+  position: absolute;
+  bottom: 10%;
+  right: 5%;
+  min-width: 15%;
+  text-align: center;
+  padding: 15px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: $shadow-black;
 }
-.app-toast-error{
-    position: absolute;
-    bottom: 10%;
-    right: 5%;
-    min-width: 15%;
-    text-align: center;
-    padding: 15px;
-    border: none;
-    border-radius: 20px;
-    box-shadow: $shadow-red-attention;
+.app-toast-error {
+  position: absolute;
+  bottom: 10%;
+  right: 5%;
+  min-width: 15%;
+  text-align: center;
+  padding: 15px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: $shadow-red-attention;
 }
 
-.title{
-    min-width: 250px;
-    max-width: 95%;
-    margin: 20px auto;
-    text-align: center;
-    @extend %font-size-title;
-    & span{
-        font-size: inherit;
-        color: $main-blue;
-    }
-    @include breakpoint(lg){
-        // width: 40%;
-    }
-    @include breakpoint(md){
-        // width: 50%;
-    }
-    @include breakpoint(sm){
-        // width: 80%;
-    }
-    @include breakpoint(xs){
-        // width: 90%;
-    }
-
- }
-
+.title {
+  min-width: 250px;
+  max-width: 95%;
+  margin: 20px auto;
+  text-align: center;
+  @extend %font-size-title;
+  & span {
+    font-size: inherit;
+    color: $main-blue;
+  }
+  @include breakpoint(lg) {
+    // width: 40%;
+  }
+  @include breakpoint(md) {
+    // width: 50%;
+  }
+  @include breakpoint(sm) {
+    // width: 80%;
+  }
+  @include breakpoint(xs) {
+    // width: 90%;
+  }
+}
 
 //attention
-.invalid{
-    box-shadow: $shadow-red-attention;
+.invalid {
+  box-shadow: $shadow-red-attention;
 }
-.active{
-    border-bottom: 0.5px solid $main-blue;
+.active {
+  border-bottom: 0.5px solid $main-blue;
 }

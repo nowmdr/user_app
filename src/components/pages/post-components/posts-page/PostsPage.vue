@@ -10,11 +10,16 @@
           <input
             v-model="sortByTitle"
             @input="searchAllPosts()"
-            placeholder="Search by a title..."
+            placeholder="Search..."
             class="app-input"
             type="text"
           />
         </div>
+        <app-select
+          class="input-select"
+          :modelValue.sync="selectedSort"
+          :options="sortOptions"
+        ></app-select>
         <add-post-button @click="modalOpen()"></add-post-button>
       </div>
       <div v-if="searchResult" class="posts-page__container">
@@ -61,6 +66,7 @@ import AppCard from "../../../UI/app-card/AppCard.vue";
 import AppModal from "../../../UI/app-modal/AppModal.vue";
 import DeleteButton from "../../../UI/delete-buttion/DeleteButton.vue";
 import RefreshButton from "../../../UI/refresh-button/refreshButton.vue";
+import AppSelect from "../../../UI/app-select/AppSelect.vue";
 import LoaderPage from "../../loader-page/LoaderPage.vue";
 import PostCard from "../post-card/PostCard.vue";
 import PostForm from "../post-form/PostForm.vue";
@@ -75,10 +81,16 @@ export default {
     PostForm,
     LoaderPage,
     PostCard,
+    AppSelect,
   },
   computed: {
     getPosts() {
       return this.$store.getters.posts;
+    },
+    sortPost() {
+      return [...this.searchedPosts].sort((post1, post2) =>
+        post1[this.selectedSort]?.localeCompare(post2[this.selectedSort])
+      );
     },
   },
   data: () => ({
@@ -94,6 +106,12 @@ export default {
     limit: 6,
     totalPages: 0,
     loader: true,
+    selectedSort: "",
+    sortOptions: [
+      { value: "none", name: "No sorted" },
+      { value: "title", name: "Sort by title" },
+      { value: "body", name: "Sort by body" },
+    ],
   }),
   async mounted() {
     await this.fetchPosts();
@@ -138,7 +156,6 @@ export default {
       this.modalVisible = true;
     },
     postOpen(post) {
-      // console.log(post)
       this.$router.push(`/posts/${post.id}`);
     },
     searchAllPosts() {
@@ -174,6 +191,18 @@ export default {
     modalVisible: async function () {
       if (!this.modalVisible) {
         await this.fetchPosts();
+      }
+    },
+    selectedSort(newValue) {
+      if (this.searchedPosts) {
+        if (this.selectedSort == "none") {
+          this.setupPagination(this.searchedPosts);
+        } else {
+          const arr = this.searchedPosts.sort((post1, post2) =>
+            post1[this.selectedSort]?.localeCompare(post2[this.selectedSort])
+          );
+          this.paginationArray = arr;
+        }
       }
     },
   },
