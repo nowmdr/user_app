@@ -3,6 +3,7 @@
 .post{
     &__container{ 
         @extend %container
+
     }
     &__card{
         background-color: $main-white;
@@ -12,11 +13,10 @@
         // height: 400px;
         margin-top: 30px;
         @include breakpoint(sm){
-            margin-top: 10px;
-            padding: 20px 15px;
+          
         }
         @include breakpoint(xs){
-         
+            margin-top: 10px;
         }
     }
     &__header{
@@ -65,12 +65,20 @@
         @include breakpoint(sm){
             padding-left: 20px;
             padding-right: 20px;
+            height: 250px;
         }
     }
     &__date{
         margin-top: 90px;
+        margin-bottom: 10px;
         display: flex;
         align-items: center;
+        @include breakpoint(sm){
+            margin-top: 70px;
+        }
+        @include breakpoint(xs){
+            margin-top: 50px;
+        }
         & span{
             @extend %font-size-small;
             color: $main-background-white;
@@ -96,7 +104,11 @@
     }
     &__body{
         margin-top: 20px;
-        padding: 0 40px 40px 40px;
+        padding: 0 30px 30px 30px;
+        @include breakpoint(sm){
+            padding-left: 20px;
+            padding-right: 20px;
+        }
 
     }
     &__text{

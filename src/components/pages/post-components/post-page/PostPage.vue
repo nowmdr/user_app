@@ -11,13 +11,11 @@
                             <img v-if="post.imageUrl" :src="`${post.imageUrl}`" alt="cover">
                             <img v-else src="https://cdn.liveagent.com/app/uploads/2021/06/sigmund-59yRYIHWtzY-unsplash.jpg" alt="cover">
                         </div> -->
-                        <div class="post__info" :style="{
-                            backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
-                                                url(${backgroundUrl})`
-                        }">
+                        <div class="post__info" :style="{backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),url(${backgroundUrl})`}">
                             <div class="post__date">
                                 <ion-icon name="calendar-outline"></ion-icon>
-                                <span>12 jan 2022</span> 
+                                <span v-if="post.date">{{post.date | date('date')}}</span> 
+                                <span v-else>{{date | date('date')}}</span>
                             </div>
                             <h3 class="post__title">{{post.title}}</h3>
                             <span class="post__subtitle">{{post.subtitle}}</span>
@@ -27,7 +25,6 @@
                         <p v-html="post.body" class="post__text"></p>
                     </div>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -38,6 +35,7 @@ import '../post-page/PostPage.scss'
 export default {
   components: { LoaderPage },
     data:() => ({
+        date: new Date,
         id: '',
         post: null,
         loader: true,
@@ -62,12 +60,14 @@ export default {
     },
     methods:{
         filterPosts(){
-            this.id = this.$route.params.id
-            this.post = (this.getPosts.filter(post => post.id == this.id))[0]
-            if(!this.post.imageUrl){
-                this.backgroundUrl = 'https://cdn.liveagent.com/app/uploads/2021/06/sigmund-59yRYIHWtzY-unsplash.jpg'
-            } else {
-                this.backgroundUrl = this.post.imageUrl
+            if(this.getPosts){
+                this.id = this.$route.params.id
+                this.post = (this.getPosts.filter(post => post.id == this.id))[0]
+                if(!this.post.imageUrl){
+                    this.backgroundUrl = 'https://cdn.liveagent.com/app/uploads/2021/06/sigmund-59yRYIHWtzY-unsplash.jpg'
+                } else {
+                    this.backgroundUrl = this.post.imageUrl
+                }
             }
         }
     }

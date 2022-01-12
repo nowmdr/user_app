@@ -81,22 +81,20 @@ export default {
     components: { AppCard, AddPostButton },
     data:() => ({
         imageUrl: '', 
-        date: '',
+        date: new Date(Date.now()).toString() ,
         title: '',
         subtitle: '',
         body: '',
         success: false,
     }),
+    mounted(){
+        console.log(typeof(this.date))
+    },
     validations:{
         title:{required, minLength: minLength(10), maxLength: maxLength(100)},
         subtitle:{required, minLength: minLength(2), maxLength: maxLength(20)},
         body:{required, minLength: minLength(10) },
         imageUrl:{url}
-    },
-    watch:{
-         imageUrl(){
-             console.log(this.imageUrl)
-         }
     },
     methods:{
         async createPost(){
@@ -106,8 +104,6 @@ export default {
             }
             console.log(this.imageUrl)
             try {
-                this.date = new Date()
-                    console.log(this.imageUrl)
                 const post = await this.$store.dispatch('addPost',{
                     date:  this.date,
                     title: this.title,
@@ -120,6 +116,7 @@ export default {
                 this.subtitle =''
                 this.title = ''
                 this.body = ''
+                this.imageUrl=''
                 this.success = true
             } catch (e) {}
         },

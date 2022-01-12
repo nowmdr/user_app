@@ -36,6 +36,7 @@ export default{
             try {
                 const uid = await dispatch('getUid')
                 console.log(title + subtitle + body + date + imageUrl)
+                console.log(typeof(date))
                 const post = await firebase.database().ref(`/users/${uid}/posts`).push({
                     imageUrl,
                     date,

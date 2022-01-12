@@ -12,7 +12,8 @@
         <div class="post-card__info">
             <div class="post-card__date">
                 <ion-icon name="calendar-outline"></ion-icon>
-                <span>12 jan 2022</span> 
+                <span v-if="post.date">{{post.date | date('date')}}</span>
+                <span v-else>{{date | date('date')}}</span> 
             </div>
             <h3 class="post-card__title">{{post.title}}</h3>
             <span v-if="post.subtitle" class="post-card__subtitle">{{post.subtitle}}</span>
@@ -27,6 +28,9 @@ import DeleteButton from '../../../UI/delete-buttion/DeleteButton.vue'
 import './PostCard.scss'
 export default {
   components: { DeleteButton },
+  data:() => ({
+      date: new Date
+  }),
     props:{
         post:{
             

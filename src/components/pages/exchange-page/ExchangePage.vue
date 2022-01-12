@@ -95,10 +95,12 @@ export default {
     async mounted(){
         await this.getCurrency()
         this.loader = false
+        console.log(this.currency.date)
     },
     methods:{
         async getCurrency(){
             this.currency = await this.$store.dispatch('getCurrency')
+            // this.currency.date = new Date 
         },
         async refresh(){
             this.currency = await this.$store.dispatch('fetchCurrency')
