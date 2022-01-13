@@ -90,13 +90,17 @@ $post-img: url("{{post.imageUrl}}");
   @include breakpoint(md) {
   }
   @include breakpoint(sm) {
-    padding-left: 2%;
-    padding-right: 2%;
+  
   }
   @include breakpoint(xs) {
   }
 }
-
+%app-card {
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: $shadow-black;
+  background-color: $main-white;
+}
 %app-button {
   border: none;
   border-radius: 20px;
@@ -192,28 +196,6 @@ $post-img: url("{{post.imageUrl}}");
 }
 .app-link {
   @extend %app-link;
-}
-.app-toast-message {
-  position: absolute;
-  bottom: 10%;
-  right: 5%;
-  min-width: 15%;
-  text-align: center;
-  padding: 15px;
-  border: none;
-  border-radius: 20px;
-  box-shadow: $shadow-black;
-}
-.app-toast-error {
-  position: absolute;
-  bottom: 10%;
-  right: 5%;
-  min-width: 15%;
-  text-align: center;
-  padding: 15px;
-  border: none;
-  border-radius: 20px;
-  box-shadow: $shadow-red-attention;
 }
 
 .title {

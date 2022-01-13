@@ -5,7 +5,7 @@
       <!-- :messages="messages" -->
 
       <app-modal :show.sync="modalVisible">
-        <post-form></post-form>
+        <post-form :show.sync="modalVisible"></post-form>
       </app-modal>
       <h3 class="title">
         <span>Hello {{ name }}</span
@@ -131,6 +131,7 @@
                 <button class="app-button" @click="error()">Push Error</button>
                 <button class="app-button" @click="info()">Push Info</button> -->
       </div>
+      <!-- <vue-editor v-model="content"></vue-editor> -->
     </div>
   </div>
 </template>
@@ -144,6 +145,7 @@ import AddPostButton from "../../UI/add-post-button/AddPostButton.vue";
 import AppModal from "../../UI/app-modal/AppModal.vue";
 import PostForm from "../post-components/post-form/PostForm.vue";
 import AppPopup from "../../UI/app-popup/AppPopup.vue";
+import { VueEditor } from "vue2-editor";
 export default {
   components: {
     AppCard,
@@ -152,6 +154,7 @@ export default {
     AppModal,
     PostForm,
     AppPopup,
+    VueEditor
   },
   data: () => ({
     loader: true,
@@ -164,6 +167,7 @@ export default {
     dateOfBirth: "",
     gender: "",
     photoUrl: "",
+    content: "<h1>Some initial content</h1>"
   }),
   validations: {
     name: { required },
