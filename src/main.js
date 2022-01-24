@@ -23,13 +23,14 @@ import 'firebase/compat/database'
 Vue.config.productionTip = false
 // firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyDjvPcStPAq9AIlQPHyfnpL46qhAwqZFt4",
-  authDomain: "user-app-testing.firebaseapp.com",
-  projectId: "user-app-testing",
-  storageBucket: "user-app-testing.appspot.com",
-  messagingSenderId: "978862273072",
-  appId: "1:978862273072:web:7bf2b0d4195017d44e33f5",
-  measurementId: "G-TDR6GKBJNB"
+  apiKey: "AIzaSyDIRA3wf4-Fd4AC9-rIPB74pOm9rGUbDWw",
+  authDomain: "user-app-3909c.firebaseapp.com",
+  databaseURL: "https://user-app-3909c-default-rtdb.firebaseio.com",
+  projectId: "user-app-3909c",
+  storageBucket: "user-app-3909c.appspot.com",
+  messagingSenderId: "510472655389",
+  appId: "1:510472655389:web:d06ab866140e3a0c7dacf4",
+  measurementId: "G-T1JT4PDDXL"
 };
 firebase.initializeApp(firebaseConfig)
 
