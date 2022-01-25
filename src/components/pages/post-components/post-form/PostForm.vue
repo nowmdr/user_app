@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="post-form-wrapper">
     <div v-if="success" class="post-success">
       <h3 class="post-success__title title">
         Hooray!<br />The post has been successfully created.
@@ -45,7 +45,7 @@
             ($v.subtitle.$dirty && !$v.subtitle.maxLength),
         }"
         class="app-input post-form__input"
-        placeholder="Subtitle - is not required"
+        placeholder="Subtitle"
         type="text"
       />
       <div class="validation-text">
@@ -116,6 +116,7 @@
 </template>
 <script>
 import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 import AppCard from "../../../UI/app-card/AppCard.vue";
 import { required, minLength, maxLength, url } from "vuelidate/lib/validators";
 import "./PostForm.scss";
@@ -140,10 +141,16 @@ export default {
     success: false,
     content: "<h1>Some initial content</h1>",
     editorOption: {
+      modules: {
+        toolbar:[
+          [ 'bold' ,  'italic' ,  'underline' ,  'strike' ],
+          [ {  'list' :  'ordered' } , {  'list' :  'bullet'  } ]
+        ]
+      },
       debug: 'info',
       placeholder: 'Type your post...',
       readOnly: true,
-      theme: 'snow',
+      theme: 'bubble',
       // toolbar:[['bold', 'italic'], ['link', 'image']]
 		}
   }),
@@ -181,7 +188,8 @@ export default {
       } catch (e) {}
     },
     closeForm(){
-      this.$emit('update:show', false) 
+      this.$store.commit('toggleModal') 
+      // this.$emit('update:show', false) 
     }
   },
   watch:{

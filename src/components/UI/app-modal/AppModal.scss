@@ -19,9 +19,23 @@
 
     
     &__content{
+        min-width: 70%;
+        // width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
+        @include breakpoint(lg){   
+           min-width: 80%;
+        }
+        @include breakpoint(md){
+            min-width: 90%;
+        }
+        @include breakpoint(sm){
+            min-width: 95%;
+        }
+        @include breakpoint(xs){
+            
+        }
         // background-color: $main-white;
         // background-color: transparent;
         // width: 80%;

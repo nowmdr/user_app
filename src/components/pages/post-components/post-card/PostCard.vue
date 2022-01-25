@@ -17,7 +17,7 @@
             </div>
             <h3 class="post-card__title">{{post.title}}</h3>
             <span v-if="post.subtitle" class="post-card__subtitle">{{post.subtitle}}</span>
-            <p class="post-card__body" v-html="post.body"></p>
+            <p class="post-card__body" v-html="post.body.substring(0, 270) + '…'"></p>
             <a @click="open(post)" class="post-card__link">Learn more</a>
             <!-- <delete-button @click="deletePost(post)"></delete-button> -->
         </div>

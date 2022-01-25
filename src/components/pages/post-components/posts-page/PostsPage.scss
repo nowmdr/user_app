@@ -6,8 +6,12 @@
     justify-content: space-between;
     margin: 30px 0;
     // @extend %container
-    @include breakpoint(sm) {
+    @include breakpoint(md) {
       flex-direction: column;
+      & .input-select{
+        width: 100%;
+        margin-bottom: 15px;
+      }
       & div {
         width: 100%;
         & input {

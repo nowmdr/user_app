@@ -1,93 +1,100 @@
-@import '../../../../theme/variables.scss';
-.post{
-    &-form{
-        // min-width: 992px;
-        width: 98%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        margin: 0 auto;
-        position: relative;
-        @extend %app-card;
-        @include breakpoint(lg){   
-            // min-width: 768px;
-        }
-        @include breakpoint(md){
-           
-        }
-        @include breakpoint(sm){
-            
-        }
-        @include breakpoint(xs){
-            
-        }
-        &__input{
-            width: 100%;
-            margin-bottom: 20px;
-        }
-        .validation-text{
-            span{
-                display: flex;
-                margin-left: 10px;
-                margin-bottom: 10px;
-            }
-           
-        }
-        &__text-editor{
-            // height: 200px;
-            // display: flex;
-        }
-        &__text{
-            width: 100%;
-            min-height: 150px;
-            margin-bottom: 20px;
-        }
-        &__close{
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-    }
-    &-success{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        @extend %app-card;
-        &__links{
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            span{
-                margin-right: 5px;
-                margin-left: 5px;
-            }
-        }
-    }
+@import "../../../../theme/variables.scss";
+.post-form-wrapper {
+  width: 100%;
 }
-.quill-editor{
-    @extend %app-input;
-    margin-bottom: 20px;
-    // display: flex;
+.post {
+  &-form {
+    width: 100%;
+    // width: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    position: relative;
+    @extend %app-card;
+    @include breakpoint(lg) {
+    }
+    @include breakpoint(md) {
+    }
+    @include breakpoint(sm) {
+    }
+    @include breakpoint(xs) {
+    }
+    &__input {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .validation-text {
+      span {
+        display: flex;
+        margin-left: 10px;
+        margin-bottom: 10px;
+      }
+    }
+    &__text-editor {
+      // height: 200px;
+      // display: flex;
+    }
+    &__text {
+      width: 100%;
+      min-height: 150px;
+      margin-bottom: 20px;
+    }
+    &__close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
   }
-.ql-toolbar.ql-snow{
-    border: none;
-    padding: 0;
-    font-family: inherit;
-}
-.ql-editor{
-    // min-height: 100px;
-}
-.ql-container.ql-snow{
-    // display: flex;
-    border: none;
-    background-color: $main-white;
-    font-family: inherit;
-    // height: 300px;
-    // min-height: 00px;
-    // height: 100%;
-    height: 40vh;
-    @include breakpoint(sm){
-        height: 20vh;
+  &-success {
+    width: 50%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @extend %app-card;
+    @include breakpoint(md) {
+      width: 100%;
     }
-    // height: 100%;
+    @include breakpoint(sm) {
+      width: 100%;
+    }
+    &__links {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      span {
+        margin-right: 5px;
+        margin-left: 5px;
+      }
+    }
+  }
+}
+.quill-editor {
+  @extend %app-input;
+  margin-bottom: 20px;
+  height: 200px;
+  // display: flex;
+}
+.ql-toolbar.ql-snow {
+  border: none;
+  padding: 0;
+  font-family: inherit;
+}
+.ql-editor {
+  // min-height: 100px;
+}
+.ql-container.ql-snow {
+  // display: flex;
+  border: none;
+  background-color: $main-white;
+  font-family: inherit;
+  // height: 300px;
+  // min-height: 00px;
+  // height: 100%;
+  height: 40vh;
+  @include breakpoint(sm) {
+    height: 20vh;
+  }
+  // height: 100%;
 }

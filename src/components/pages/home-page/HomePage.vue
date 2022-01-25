@@ -2,8 +2,6 @@
   <div>
     <loader-page v-if="loader"></loader-page>
     <div v-else class="home">
-      <!-- :messages="messages" -->
-
       <app-modal :show.sync="modalVisible">
         <post-form :show.sync="modalVisible"></post-form>
       </app-modal>
@@ -15,42 +13,50 @@
         <app-card>
           <form class="user-form">
             <div class="user-form__photo">
-              <img v-if="photoUrl" :src="`${photoUrl}`" alt="user-photo" />
+              <img
+                v-if="photoUrl"
+                :src="`${photoUrl}`"
+                onerror="this.src='https://media.istockphoto.com/vectors/fi/avatar-profiilin-oletuskuvakkeen-vektori-id1337144146?b=1&k=20&m=1337144146&s=170667a&w=0&h=ys-RUZbXzQ-FQdLstHeWshI4ViJuEhyEa4AzQNQ0rFI='"
+              />
               <img
                 v-else
-                src="https://preserveyourestate.net/wp-content/uploads/2018/08/Non-profile.jpg"
-                alt="user-photo"
+                src="https://media.istockphoto.com/vectors/fi/avatar-profiilin-oletuskuvakkeen-vektori-id1337144146?b=1&k=20&m=1337144146&s=170667a&w=0&h=ys-RUZbXzQ-FQdLstHeWshI4ViJuEhyEa4AzQNQ0rFI="
+                alt=""
               />
             </div>
-            <label class="user-form__input"
-              >Name:
+            <label :class="{'edit-label': !inputDisabled}" class="user-form__input"
+              ><p>Name:</p>
+              <span v-if="inputDisabled">{{name}}</span>
               <input
+                v-else
+                :class="{ edit: !inputDisabled }"
                 type="text"
                 v-model="name"
                 placeholder="Enter you name..."
                 :disabled="inputDisabled"
-              /><br />
+              />
               <span
                 class="error-text"
                 v-if="$v.name.$dirty && !$v.name.required"
                 >Name field is empty</span
               >
             </label>
-            <label class="user-form__input">
-              Date of birth:
+            <label :class="{'edit-label': !inputDisabled}" class="user-form__input">
+              <p>Date of birth:</p>
               <span v-if="inputDisabled">{{ dateOfBirth | date("date") }}</span>
               <input
                 v-else
+                :class="{ edit: !inputDisabled }"
                 type="date"
                 :disabled="inputDisabled"
                 v-model="dateOfBirth"
               />
             </label>
-            <label class="user-form__input"
+            <label :class="{'edit-label': !inputDisabled}" class="user-form__input"
               >Gender:
               <span v-if="inputDisabled">{{ gender }}</span>
               <select
-                :class="{ 'main-black': copyInfo.gender }"
+                :class="{ 'main-black': copyInfo.gender, edit: !inputDisabled }"
                 class="input-select"
                 name="gender"
                 v-model="gender"
@@ -62,41 +68,52 @@
                 <option value="Male">Male</option>
               </select>
             </label>
-            <label class="user-form__input"
-              >City:
+            <label :class="{'edit-label': !inputDisabled}" class="user-form__input"
+              ><p>City:</p> 
+              <span v-if="inputDisabled">{{city}}</span>
               <input
+                v-else
+                :class="{ edit: !inputDisabled }"
                 type="text"
                 :disabled="inputDisabled"
                 placeholder="Enter your city..."
                 v-model="city"
-              /><br />
+              />
               <span
                 class="error-text"
                 v-if="$v.city.$dirty && !$v.city.required"
                 >City field is empty</span
               >
             </label>
-            <label class="user-form__input"
-              >Weather city:
+            <label :class="{'edit-label': !inputDisabled}" class="user-form__input"
+              ><p>Weather city:</p>  
+              <span v-if="inputDisabled">{{cityOfWeather}}</span>
               <input
+                v-else
+                :class="{ edit: !inputDisabled }"
                 type="text"
                 :disabled="inputDisabled"
                 placeholder="Type here city of weather"
                 v-model="cityOfWeather"
-              /><br />
+              />
               <span
                 class="error-text"
                 v-if="$v.city.$dirty && !$v.city.required"
                 >City field is empty</span
               >
             </label>
-            <label v-if="!inputDisabled" class="user-form__input"
+            <label :class="{'edit-label': !inputDisabled}" v-if="!inputDisabled" class="user-form__input"
               >Photo URL:
+              <clear-button @click="clearUrl" class="delete-btn"></clear-button>
               <input
                 type="text"
                 :disabled="inputDisabled"
                 placeholder="Paste here your photo URL"
-                :class="{ invalid: $v.photoUrl.$dirty && !$v.photoUrl.url }"
+                :class="{
+                  invalid: $v.photoUrl.$dirty && !$v.photoUrl.url,
+                  edit: !inputDisabled,
+                }"
+                class="photo-input"
                 v-model="photoUrl"
               /><br />
               <span
@@ -111,14 +128,21 @@
               @click.prevent="inputDisabled = false"
               >Edit data</a
             >
-            <button
-              class="app-button user-form__button"
-              v-else
-              @click.prevent="uploadData()"
+            <div class="user-btns-wrapper" v-else>
+              <button
+                class="app-button user-form__button"
+                @click.prevent="uploadData()"
+              >
+                Save
+              </button>
+              <a
+              class="app-link user-form__link"
+              @click.prevent="getInfo"
+              >Back</a
             >
-              Save
-            </button>
-            <div class="user-form__post-button">
+            </div>
+
+            <div v-if="inputDisabled" class="user-form__post-button">
               <add-post-button
                 class="post-button"
                 @click="modalOpen()"
@@ -131,7 +155,6 @@
                 <button class="app-button" @click="error()">Push Error</button>
                 <button class="app-button" @click="info()">Push Info</button> -->
       </div>
-      <!-- <vue-editor v-model="content"></vue-editor> -->
     </div>
   </div>
 </template>
@@ -146,6 +169,7 @@ import AppModal from "../../UI/app-modal/AppModal.vue";
 import PostForm from "../post-components/post-form/PostForm.vue";
 import AppPopup from "../../UI/app-popup/AppPopup.vue";
 import { VueEditor } from "vue2-editor";
+import ClearButton from "../../UI/clear-button/ClearButton.vue";
 export default {
   components: {
     AppCard,
@@ -154,7 +178,8 @@ export default {
     AppModal,
     PostForm,
     AppPopup,
-    VueEditor
+    VueEditor,
+    ClearButton,
   },
   data: () => ({
     loader: true,
@@ -167,7 +192,6 @@ export default {
     dateOfBirth: "",
     gender: "",
     photoUrl: "",
-    content: "<h1>Some initial content</h1>"
   }),
   validations: {
     name: { required },
@@ -185,6 +209,9 @@ export default {
     // },
   },
   methods: {
+    clearUrl() {
+      this.photoUrl = "";
+    },
     // success(){
     //     this.$popupSuccess('Woooooow')
     // },
@@ -203,6 +230,7 @@ export default {
       } else {
         this.copyInfo = this.$store.getters.info;
       }
+      this.inputDisabled = true;
       console.log(this.copyInfo);
       this.name = this.copyInfo.name;
       this.city = this.copyInfo.city;
@@ -212,7 +240,8 @@ export default {
       this.photoUrl = this.copyInfo.photoUrl;
     },
     modalOpen() {
-      this.modalVisible = true;
+      this.$store.commit('toggleModal') 
+      // this.modalVisible = true;
     },
     async uploadData() {
       if (this.$v.$invalid) {

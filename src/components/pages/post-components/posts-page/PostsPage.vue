@@ -20,7 +20,7 @@
           :modelValue.sync="selectedSort"
           :options="sortOptions"
         ></app-select>
-        <add-post-button @click="modalOpen()"></add-post-button>
+        <add-post-button @click="modalOpen"></add-post-button>
       </div>
       <div v-if="searchResult" class="posts-page__container">
         <ul class="posts-page__list">
@@ -153,7 +153,8 @@ export default {
       this.fetchPosts();
     },
     modalOpen() {
-      this.modalVisible = true;
+      this.$store.commit('toggleModal') 
+      // this.modalVisible = true;
     },
     postOpen(post) {
       this.$router.push(`/posts/${post.id}`);
@@ -179,6 +180,11 @@ export default {
       }
     },
   },
+  computed:{
+    showModal(){
+      return this.$store.getters.showModal
+    }
+  },
   watch: {
     page: function () {
       if (this.page) {
@@ -188,8 +194,8 @@ export default {
           .catch(() => {});
       }
     },
-    modalVisible: async function () {
-      if (!this.modalVisible) {
+    showModal: async function () {
+      if (!this.showModal) {
         await this.fetchPosts();
       }
     },

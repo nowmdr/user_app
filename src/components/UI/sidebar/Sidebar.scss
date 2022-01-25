@@ -23,6 +23,7 @@
         top: 0;
         left: 0;
         cursor: pointer;
+        z-index: 998;
     }
     &__panel {
         overflow-y: auto;
@@ -37,6 +38,7 @@
         @include breakpoint(sm){
             width: 50%;
         }
+        z-index: 999;
     }
     &-menu{
         display: flex;

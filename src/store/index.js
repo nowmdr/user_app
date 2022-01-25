@@ -14,6 +14,7 @@ export default new Vuex.Store({
   state: {
     error: null,
     currency:null,
+    showModal: false
   },
   mutations: {
     setError(state, error){
@@ -25,10 +26,14 @@ export default new Vuex.Store({
     setCurrency(state, currency){
       state.currency = currency
     },
+    toggleModal(state){
+      state.showModal = !state.showModal
+    }
   },
   getters:{
     error: s => s.error,
     currency: s => s.currency,
+    showModal: s => s.showModal
   },
   actions: {
     async  fetchCurrency({dispatch,commit}){

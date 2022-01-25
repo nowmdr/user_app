@@ -2,7 +2,7 @@
     <div 
     class="app-modal" 
     @click="closeModal()"
-    v-if="show">
+    v-if="showModal">
         <div @click.stop class="app-modal__content">
             <slot></slot>
         </div>
@@ -17,9 +17,15 @@ export default {
             default: false
         }
     },
+    computed:{
+        showModal(){
+            return this.$store.getters.showModal
+        }
+    },
     methods:{
-        closeModal(){   
-            this.$emit('update:show', false) 
+        closeModal(){  
+            this.$store.commit('toggleModal') 
+            // this.$emit('update:show', false) 
         }
     }
 }

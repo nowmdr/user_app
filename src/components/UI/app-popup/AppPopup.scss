@@ -2,8 +2,19 @@
 .popup{
     position: fixed;
     bottom: 50px;
-    left: 30%;
+    left: 40%;
     z-index: 10000;
+    @include breakpoint(lg) {
+        left: 35%;
+    }
+    @include breakpoint(md) {
+        left: 25%;
+    }
+    @include breakpoint(sm) {
+        left: 10%;
+    }
+    @include breakpoint(xs) {
+    }
     // display: flex;
     // flex-direction: column-reverse;
     &__container{
