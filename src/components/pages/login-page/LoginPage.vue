@@ -55,7 +55,6 @@ export default {
   },
   watch:{
     error(fbError){
-      console.log(fbError.code)
       this.$popupError(messages[fbError.code] || 'Something wrong, try again') 
     }
   }, 
@@ -75,7 +74,6 @@ export default {
       }
       try {
         await this.$store.dispatch('login', formData)
-        console.log(formData);
         this.$router.push('/home')
       } catch (e) {}
     }

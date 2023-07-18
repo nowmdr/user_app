@@ -16,8 +16,6 @@ export default{
             const newMessages = state.messages
             newMessages.push({name: message, id: timeStamp, type: type })
             commit('addMessage', newMessages)
-            console.log(newMessages)
-            console.log(state.messages)
         }
     },
     getters:{

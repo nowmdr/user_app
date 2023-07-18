@@ -15,7 +15,6 @@ export default {
         click(){
             if (this.copy) {
                 const result = eval(this.copy).toFixed(2)
-                console.log(result)
 
                 navigator.clipboard.writeText(result)
                 // this.$emit('click')

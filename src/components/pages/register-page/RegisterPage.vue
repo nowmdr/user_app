@@ -149,7 +149,6 @@ export default {
   },
   watch: {
     error(fbError) {
-      console.log(fbError.code);
       this.$popupError(messages[fbError.code] || "Something went wrong");
     },
   },
@@ -170,10 +169,8 @@ export default {
       };
       try {
         await this.$store.dispatch("register", formData);
-        console.log(formData);
         this.$router.push("/home");
       } catch (e) {
-        console.log(e);
       }
     },
   },

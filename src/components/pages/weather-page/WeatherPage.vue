@@ -89,7 +89,6 @@ export default {
         // const timeOfDay = data.weather[0].icon;
         this.cityFound = false;
       } catch (e) {
-        console.log(e.message);
         this.cityFound = true;
         this.$popupError(messages[e.message]);
       }

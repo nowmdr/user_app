@@ -155,7 +155,7 @@ export default {
 		}
   }),
   mounted() {
-    console.log(typeof this.date);
+
   },
   validations: {
     title: { required, minLength: minLength(10), maxLength: maxLength(100) },
@@ -169,7 +169,6 @@ export default {
         this.$v.$touch();
         return;
       }
-      console.log(this.imageUrl);
       try {
         const post = await this.$store.dispatch("addPost", {
           date: this.date,
@@ -178,7 +177,6 @@ export default {
           body: this.body,
           imageUrl: this.imageUrl,
         });
-        console.log(post);
         this.$v.$reset();
         this.subtitle = "";
         this.title = "";
@@ -194,7 +192,7 @@ export default {
   },
   watch:{
       content(text){
-          console.log(text)
+          // console.log(text)
       }
   }
 };

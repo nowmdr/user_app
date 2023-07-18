@@ -16,7 +16,6 @@ export default {
         async fetchNativePosts() {
             try {
                 const response = (await axios.get(`https://jsonplaceholder.typicode.com/posts?_limit=10`)).data
-                console.log(response)
                 return response
             } catch (error) {
                 commit('setError', e)
@@ -35,8 +34,6 @@ export default {
         async addPost({ dispatch, commit }, { title, subtitle, body, date, imageUrl }) {
             try {
                 const uid = await dispatch('getUid')
-                console.log(title + subtitle + body + date + imageUrl)
-                console.log(typeof (date))
                 const post = await firebase.database().ref(`/users/${uid}/posts`).push({
                     imageUrl,
                     date,
@@ -70,7 +67,6 @@ export default {
             try {
                 const uid = await dispatch('getUid')
                 await firebase.database().ref(`/users/${uid}/posts/${id}`).remove()
-                console.log(id)
             } catch (e) {
                 commit('setError', e)
             }

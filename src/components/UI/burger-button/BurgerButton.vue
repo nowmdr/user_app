@@ -22,9 +22,7 @@ export default {
     },
     methods: {
         open() {
-            console.log(this.isBurgerActive)
             this.$store.commit('openSidebar')
-            console.log(this.isBurgerActive)
         }
     }
 }

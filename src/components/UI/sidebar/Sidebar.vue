@@ -42,9 +42,7 @@ export default {
       this.$router.push("/login?message=logout");
     },
     closeSidebarPanel() {
-      console.log(this.isPanelOpen);
       this.$store.commit("closeSidebar");
-      console.log(this.isPanelOpen);
     },
   },
   computed: {

@@ -212,18 +212,6 @@ export default {
     clearUrl() {
       this.photoUrl = "";
     },
-    // success(){
-    //     this.$popupSuccess('Woooooow')
-    // },
-    // warning(){
-    //     this.$popupWarning('Woooooow')
-    // },
-    // error(){
-    //     this.$popupError('Woooooow')
-    // },
-    // info(){
-    //     this.$popupInfo('Woooooow')
-    // },
     async getInfo() {
       if (!Object.keys(this.$store.getters.info).length) {
         this.copyInfo = await this.$store.dispatch("fetchInfo");
@@ -231,7 +219,7 @@ export default {
         this.copyInfo = this.$store.getters.info;
       }
       this.inputDisabled = true;
-      console.log(this.copyInfo);
+
       this.name = this.copyInfo.name;
       this.city = this.copyInfo.city;
       this.gender = this.copyInfo.gender;
@@ -256,7 +244,6 @@ export default {
         cityOfWeather: this.cityOfWeather,
         photoUrl: this.photoUrl,
       };
-      console.log(this.copyInfo);
       this.inputDisabled = true;
       await this.$store.dispatch("updateInfo", formData);
       await this.$store.dispatch("fetchInfo");

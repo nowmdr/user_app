@@ -95,12 +95,11 @@ export default {
     async mounted(){
         await this.getCurrency()
         this.loader = false
-        console.log(this.currency.date)
     },
     methods:{
         async getCurrency(){
             this.currency = await this.$store.dispatch('getCurrency')
-            // this.currency.date = new Date 
+
         },
         async refresh(){
             this.currency = await this.$store.dispatch('fetchCurrency')
@@ -160,7 +159,6 @@ export default {
         exchangePln(){
             this.pln = this.pln.replace(/[^0-9\.\,\+\-\*\/]/g,'');
             for(let i = 0; i < this.pln.length; i++){
-                console.log(this.pln.charAt(i));
                 if (this.pln.charAt(i) == "+" || "-" || "*" || "/") {
                     this.calc = eval(this.pln).toFixed(2)
                     this.eur = +(this.calc / this.currency.rates.PLN).toFixed(2)
@@ -199,7 +197,6 @@ export default {
     },
     watch:{
         error(fbError){
-            console.log(fbError.code)
             this.$popupError(fbError.code ||'Something wrong, try again') 
         },
         eur: function(){

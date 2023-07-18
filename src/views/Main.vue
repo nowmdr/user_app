@@ -22,13 +22,11 @@ export default{
     components: { Header, LoginPage, Footer, AppPopup },
     mounted(){
         const currentUser = firebase.auth().currentUser
-        // console.log(currentUser)
         if (!currentUser) {
            this.$router.push('/login').catch(err => {})
         } else {
             this.$router.push('/home').catch(err => {})
         }
-        // console.log(document.cookie)
     }
     
 }

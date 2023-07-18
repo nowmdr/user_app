@@ -115,7 +115,6 @@ export default {
   }),
   async mounted() {
     await this.fetchPosts();
-    console.log(this.searchedPosts);
     this.loader = false;
   },
   methods: {
@@ -124,7 +123,6 @@ export default {
       // this.totalPages = Math.ceil(this.searchedPosts.length / this.limit)
       this.totalPages = _.size(tempArray);
       this.paginationArray = tempArray[this.page - 1] || tempArray[0];
-      console.log(this.paginationArray);
     },
     changePage(pageNumber) {
       this.page = pageNumber;
@@ -140,13 +138,11 @@ export default {
         this.searchedPosts = this.copyPosts.concat(this.searchedPosts);
       }
       this.$store.commit("setPosts", this.searchedPosts);
-      console.log(this.searchedPosts);
       this.setupPagination(this.searchedPosts);
     },
     async deletePost(post) {
-      console.log(post);
+
       // this.copyPosts = this.copyPosts.filter(p => p.id !== post.id)
-      // console.log(this.copyPosts)
       // await this.$store.dispatch('updatePosts', this.copyPosts)
       await this.$store.dispatch("deletePost", post.id);
       // this.copyPosts = await this.$store.dispatch('getPosts')
